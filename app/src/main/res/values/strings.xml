@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Rest</string>
+    <string name="id_label">The ID is</string>
+    <string name="id_value">[id]</string>
+    <string name="content_label">The Content is</string>
+    <string name="content_value">[content]</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_refresh">Refresh</string>
+
+    <string name="totalcount_label">Total Count</string>
+    <string name="totalcount_value">[totalcount]</string>
+
+    <string name="resourcename_label">Resource Type</string>
+    <string name="resourcename_value">[resourcename]</string>
+</resources>
