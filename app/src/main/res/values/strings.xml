@@ -1,15 +1,44 @@
 <resources>
-    <string name="app_name">Rest</string>
+    //****************************
+    // General
+    //****************************
+
+
+    //Labels
+    <string name="app_name">MinSM</string>
     <string name="id_label">The ID is</string>
     <string name="id_value">[id]</string>
     <string name="content_label">The Content is</string>
-    <string name="content_value">[content]</string>
     <string name="action_settings">Settings</string>
     <string name="action_refresh">Refresh</string>
-
-    <string name="totalcount_label">Total Count</string>
-    <string name="totalcount_value">[totalcount]</string>
-
     <string name="resourcename_label">Resource Type</string>
+    <string name="totalcount_label">Total Count</string>
+    <string name="totalview_label">Total View</string>
+
+    //Values
+    <string name="content_value">[content]</string>
     <string name="resourcename_value">[resourcename]</string>
+    <string name="totalcount_value">[totalcount]</string>
+    <string name="totalview_value">[totalview]</string>
+
+
+    //***************************
+    //Preferences Strings
+    //***************************
+    //Labels
+     <string name="preferences_title">Preferences</string>
+    <string name="url_label">URL</string>
+    <string name="port_label">Port</string>
+    <string name="count_label">Count</string>
+    <string name="user_label">User</string>
+    <string name="pass_label">Pass</string>
+
+    //Values
+    <string name="url_value">[URL]</string>
+    <string name="port_value">[Port]</string>
+    <string name="count_value">[Count]</string>
+    <string name="user_value">[User]</string>
+    <string name="pass_value">[Pass]</string>
+
+
 </resources>

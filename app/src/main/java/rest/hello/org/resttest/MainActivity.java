@@ -1,16 +1,18 @@
 package rest.hello.org.resttest;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import org.springframework.http.HttpAuthentication;
@@ -20,11 +22,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.util.UriUtils;
 
-import java.nio.charset.Charset;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,25 +56,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private class HttpRequestTask extends AsyncTask<Void, Void, Incident> {
+    private class HttpRequestTask extends AsyncTask<Void, Void, Object_Incident> {
 
 
         @Override
-        protected Incident doInBackground(Void... params) {
+        protected Object_Incident doInBackground(Void... params) {
             try {
-                // The connection URL
-                String url = "http://192.168.0.23:13080/SM/9/rest/incidents";
+
+
+                //Get Preferences Data
+                SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                String strUserName = SP.getString("username", "falcon");
+                String strPassword = SP.getString("password", "");
+                String strServer = SP.getString("server", "http://192.168.0.23");
+                String strPort = SP.getString("port", "13080");
+                String strIncidentCount = SP.getString("incidentCount", "10");
+                boolean bAppUpdates = SP.getBoolean("notifyNew", false);
+
+
+                // The connection URL - Building a parameterized URL
+                String url = strServer+":"+strPort+"/SM/9/rest/incidents";
+
+                UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
+                        .queryParam("view", "expand")
+                        .queryParam("count", strIncidentCount)
+                        .queryParam("assignee.name", strUserName);
+                String paramURL = builder.build().encode().toUri().toString();
+
+                //Logging username, password and url
+                Log.e("MainActivity", "Username: "+strUserName+" - Password: "+strPassword);
+                Log.e("MainActivity",  "url: "+paramURL);
+
 
                 RestTemplate restTemplate = new RestTemplate();
-                ResponseEntity<Incident> response;
+                ResponseEntity<Object_Incident> response;
 
                 // Populate the HTTP Basic Authentitcation header with the username and password
-                HttpAuthentication authHeader = new HttpBasicAuthentication("falcon", "");
+                HttpAuthentication authHeader = new HttpBasicAuthentication(strUserName, strPassword);
                 HttpHeaders requestHeaders = new HttpHeaders();
                 requestHeaders.setAuthorization(authHeader);
                 requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
-                response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Incident.class);
+                response = restTemplate.exchange(paramURL, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Object_Incident.class);
 
                 Log.e("MainActivity", response.getBody().getCount().toString());
 
@@ -87,13 +111,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Incident incident) {
+        protected void onPostExecute(Object_Incident incident) {
+            TextView incidentView = (TextView) findViewById(R.id.totalview_value);
             TextView incidentCount = (TextView) findViewById(R.id.totalcount_value);
             TextView incidentName = (TextView) findViewById(R.id.resourcename_value);
-            incidentCount.setText(incident.getCount().toString());
+            incidentView.setText(incident.getCount().toString());
+            incidentCount.setText(incident.getTotalcount().toString());
             incidentName.setText(incident.getResourceName());
 
-            Log.e("MainActivity", "count: "+incident.getCount());
+            Log.e("MainActivity", "Count: " + incident.getCount());
+            Log.e("MainActivity", "Total Count: "+incident.getTotalcount());
+            Log.e("MainActivity", "get list item: "+incident.getContent().get(0));
+
+            incidentName.setText(incident.getContent().get(0).getIncident().getTitle().toString());
+
+
         }
     }
 
@@ -113,6 +145,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent i = new Intent(this, PreferencesActivity.class);
+            startActivity(i);
             return true;
         }
         if (id == R.id.action_refresh) {

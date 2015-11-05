@@ -10,12 +10,21 @@
     tools:showIn="@layout/activity_main" tools:context=".MainActivity">
 
 
+    //Labels
+    <TextView
+        android:id="@+id/totalview_label"
+        android:text="@string/totalview_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/totalcount_label"
         android:text="@string/totalcount_label"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/totalview_label"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:id="@+id/resourcename_label"
@@ -26,12 +35,26 @@
         android:layout_below="@+id/totalcount_label"
         android:layout_alignParentLeft="true" />
 
+
+
+
+    //Values
+
+    <TextView
+        android:id="@+id/totalview_value"
+        android:text="@string/totalview_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/totalview_label"
+        android:layout_marginLeft="50dp" />
+
     <TextView
         android:id="@+id/totalcount_value"
         android:text="@string/totalcount_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignTop="@+id/totalcount_label"
         android:layout_toRightOf="@+id/totalcount_label"
         android:layout_marginLeft="50dp" />
 

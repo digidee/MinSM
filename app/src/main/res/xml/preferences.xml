@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference android:title="Username"
+        android:key="username"
+        android:defaultValue="falcon"
+        android:summary="Please provide your Service Manager username"></EditTextPreference>
+    <EditTextPreference android:title="Password"
+        android:key="password"
+        android:inputType="textPassword"
+        android:defaultValue=""
+        android:summary="Please provide your Service Manager password"></EditTextPreference>
+    <EditTextPreference android:title="Server"
+        android:key="server"
+        android:defaultValue="http://192.168.0.23"
+        android:summary="Please provide your Service Manager server"></EditTextPreference>
+    <EditTextPreference android:title="Port"
+        android:key="port"
+        android:defaultValue="13080"
+        android:summary="Please provide your Service Manager port"></EditTextPreference>
+    <ListPreference     android:title="Incident Count"
+        android:summary="Select the count of incidents you would like"
+        android:key="incidentCount"
+        android:defaultValue="10"
+        android:entries="@array/listArray"
+        android:entryValues="@array/listValues" />
+    <CheckBoxPreference android:title="Notify on New Incidents"
+        android:defaultValue="false"
+        android:summary="This option if selected will allow the application to notify you when receiving new incidents."
+        android:key="notifyNew" />
+</PreferenceScreen>
