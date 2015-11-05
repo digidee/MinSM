@@ -1,6 +1,7 @@
 package rest.hello.org.resttest;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     //****************
     private String[] textIM, textTitle;
     private Integer[] image_id;
+    private String crash;
 
     private Activity act;
 
@@ -116,11 +119,12 @@ public class MainActivity extends AppCompatActivity {
                 response = restTemplate.exchange(paramURL, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Object_Incident.class);
 
                 Log.e("MainActivity", response.getBody().getCount().toString());
-
                 return response.getBody();
 
             } catch (Exception e) {
+                crash=e.getMessage();
                 Log.e("MainActivity", e.getMessage(), e);
+
             }
 
             return null;
@@ -128,37 +132,51 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Object_Incident incident) {
-            TextView incidentView = (TextView) findViewById(R.id.totalview_value);
-            TextView incidentCount = (TextView) findViewById(R.id.totalcount_value);
-            TextView incidentName = (TextView) findViewById(R.id.resourcename_value);
-            incidentView.setText(incident.getCount().toString());
-            incidentCount.setText(incident.getTotalcount().toString());
-            incidentName.setText(incident.getResourceName());
+            try {
+
+                TextView incidentView = (TextView) findViewById(R.id.totalview_value);
+                TextView incidentCount = (TextView) findViewById(R.id.totalcount_value);
+                TextView incidentName = (TextView) findViewById(R.id.resourcename_value);
+                incidentView.setText(incident.getCount().toString());
+                incidentCount.setText(incident.getTotalcount().toString());
+                incidentName.setText(incident.getResourceName());
 
 
-            Log.e("MainActivity", "Count: " + incident.getCount());
-            Log.e("MainActivity", "Total Count: " + incident.getTotalcount());
+                Log.e("MainActivity", "Count: " + incident.getCount());
+                Log.e("MainActivity", "Total Count: " + incident.getTotalcount());
 
 
-            //*****************
-            //Listview
-            //****************
-            textIM = new String[incident.getCount()];
-            textTitle = new String[incident.getCount()];
+                //*****************
+                //Listview
+                //****************
+                textIM = new String[incident.getCount()];
+                textTitle = new String[incident.getCount()];
+                image_id = new Integer[incident.getCount()];
+                for (int i = 0; i < incident.getCount(); i++) {
+                    textIM[i] = incident.getContent().get(i).getIncident().getIncidentID().toString();
+                    textTitle[i] = incident.getContent().get(i).getIncident().getTitle().toString();
+                    image_id[i] = R.mipmap.ic_launcher;
+                }
 
-            image_id = new Integer[incident.getCount()];
-            for (int i = 0; i < incident.getCount(); i++) {
-                textIM[i] = incident.getContent().get(i).getIncident().getIncidentID().toString();
-                textTitle[i] = incident.getContent().get(i).getIncident().getTitle().toString();
-                image_id[i] = R.mipmap.ic_launcher;
+                CustomListAdapter adapter = new CustomListAdapter(act, image_id, textIM, textTitle);
+                ListView lv = (ListView) findViewById(R.id.listView);
+                lv.setAdapter(adapter);
+
+            } catch (Exception e) {
+
+                Log.e("MainActivity", e.getMessage(), e);
             }
-
-            CustomListAdapter adapter = new CustomListAdapter(act, image_id, textIM, textTitle);
-            ListView lv = (ListView) findViewById(R.id.listView);
-            lv.setAdapter(adapter);
-
-
+            notifyMe(crash);
         }
+    }
+
+    public void notifyMe(String m){
+        Context context = getApplicationContext();
+        CharSequence text = "Hello toast!";
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, m, duration);
+        toast.show();
     }
 
     @Override
