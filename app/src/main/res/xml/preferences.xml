@@ -11,7 +11,7 @@
         android:summary="Please provide your Service Manager password"></EditTextPreference>
     <EditTextPreference android:title="Server"
         android:key="server"
-        android:defaultValue="http://192.168.0.23"
+        android:defaultValue="http://192.168.0.26"
         android:summary="Please provide your Service Manager server"></EditTextPreference>
     <EditTextPreference android:title="Port"
         android:key="port"

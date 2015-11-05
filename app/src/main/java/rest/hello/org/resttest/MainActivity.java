@@ -1,5 +1,6 @@
 package rest.hello.org.resttest;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -13,6 +14,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.springframework.http.HttpAuthentication;
@@ -24,13 +27,19 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.springframework.web.util.UriUtils;
 
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
-    String result;
+
+    //*****************
+    //Listview
+    //****************
+    private String[] textIM, textTitle;
+    private Integer[] image_id;
+
+    private Activity act;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +52,17 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Synchronizing with Service Manager", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                new HttpRequestTask().execute();
             }
         });
+
+
+        act = this;
+
+
     }
 
     @Override
@@ -68,14 +84,14 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 String strUserName = SP.getString("username", "falcon");
                 String strPassword = SP.getString("password", "");
-                String strServer = SP.getString("server", "http://192.168.0.23");
+                String strServer = SP.getString("server", "http://192.168.0.26");
                 String strPort = SP.getString("port", "13080");
                 String strIncidentCount = SP.getString("incidentCount", "10");
                 boolean bAppUpdates = SP.getBoolean("notifyNew", false);
 
 
                 // The connection URL - Building a parameterized URL
-                String url = strServer+":"+strPort+"/SM/9/rest/incidents";
+                String url = strServer + ":" + strPort + "/SM/9/rest/incidents";
 
                 UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                         .queryParam("view", "expand")
@@ -84,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
                 String paramURL = builder.build().encode().toUri().toString();
 
                 //Logging username, password and url
-                Log.e("MainActivity", "Username: "+strUserName+" - Password: "+strPassword);
-                Log.e("MainActivity",  "url: "+paramURL);
+                Log.e("MainActivity", "Username: " + strUserName + " - Password: " + strPassword);
+                Log.e("MainActivity", "url: " + paramURL);
 
 
                 RestTemplate restTemplate = new RestTemplate();
@@ -119,11 +135,27 @@ public class MainActivity extends AppCompatActivity {
             incidentCount.setText(incident.getTotalcount().toString());
             incidentName.setText(incident.getResourceName());
 
-            Log.e("MainActivity", "Count: " + incident.getCount());
-            Log.e("MainActivity", "Total Count: "+incident.getTotalcount());
-            Log.e("MainActivity", "get list item: "+incident.getContent().get(0));
 
-            incidentName.setText(incident.getContent().get(0).getIncident().getTitle().toString());
+            Log.e("MainActivity", "Count: " + incident.getCount());
+            Log.e("MainActivity", "Total Count: " + incident.getTotalcount());
+
+
+            //*****************
+            //Listview
+            //****************
+            textIM = new String[incident.getCount()];
+            textTitle = new String[incident.getCount()];
+
+            image_id = new Integer[incident.getCount()];
+            for (int i = 0; i < incident.getCount(); i++) {
+                textIM[i] = incident.getContent().get(i).getIncident().getIncidentID().toString();
+                textTitle[i] = incident.getContent().get(i).getIncident().getTitle().toString();
+                image_id[i] = R.mipmap.ic_launcher;
+            }
+
+            CustomListAdapter adapter = new CustomListAdapter(act, image_id, textIM, textTitle);
+            ListView lv = (ListView) findViewById(R.id.listView);
+            lv.setAdapter(adapter);
 
 
         }
