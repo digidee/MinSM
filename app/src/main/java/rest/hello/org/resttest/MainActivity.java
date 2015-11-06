@@ -3,10 +3,8 @@ package rest.hello.org.resttest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,25 +13,26 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.springframework.http.HttpAuthentication;
-import org.springframework.http.HttpBasicAuthentication;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.Collections;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    //**************************
+    // TEST OBJECT JSON
+    //*************************
+    //using JSONObject as test
+    ObjectMapper mapper = new ObjectMapper();
+    Object_TestJSON JSONObject;
+    //**************************
+    // TEST OBJECT JSON
+    //*************************
+    //using JSONObject as test
 
     //*****************
     //Listview
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private String crash;
 
     private Activity act;
+    ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +66,10 @@ public class MainActivity extends AppCompatActivity {
         act = this;
 
 
+        //using JSONObject as test
+        ObjectMapper mapper = new ObjectMapper();
+
+
     }
 
     @Override
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             try {
 
 
-                //Get Preferences Data
+/*                //Get Preferences Data
                 SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 String strUserName = SP.getString("username", "falcon");
                 String strPassword = SP.getString("password", "");
@@ -117,12 +121,25 @@ public class MainActivity extends AppCompatActivity {
                 requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
                 response = restTemplate.exchange(paramURL, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Object_Incident.class);
-
                 Log.e("MainActivity", response.getBody().getCount().toString());
-                return response.getBody();
+                return response.getBody();*/
+
+
+                //**************************
+                // TEST OBJECT JSON
+                //*************************
+                //using JSONObject as test
+                //JSON from String to Object
+                JSONObject = new Object_TestJSON();
+                Object_Incident objInc = mapper.readValue(JSONObject.getJSONObject(), Object_Incident.class);
+                return objInc;
+                //**************************
+                // TEST OBJECT JSON
+                //*************************
+
 
             } catch (Exception e) {
-                crash=e.getMessage();
+                crash = e.getMessage();
                 Log.e("MainActivity", e.getMessage(), e);
 
             }
@@ -131,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Object_Incident incident) {
+        protected void onPostExecute(final Object_Incident incident) {
             try {
 
                 TextView incidentView = (TextView) findViewById(R.id.totalview_value);
@@ -158,10 +175,29 @@ public class MainActivity extends AppCompatActivity {
                     image_id[i] = R.mipmap.ic_launcher;
                 }
 
-                CustomListAdapter adapter = new CustomListAdapter(act, image_id, textIM, textTitle);
-                ListView lv = (ListView) findViewById(R.id.listView);
+                final CustomListAdapter adapter = new CustomListAdapter(act, image_id, textIM, textTitle);
+                lv = (ListView) findViewById(R.id.listview);
                 lv.setAdapter(adapter);
 
+                lv.setOnItemClickListener(
+                        new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> arg0, View view,
+                                                    int position, long id) {
+
+                                //Take action here.
+                                Object_Incident_ clickIM = incident.getContent().get(lv.getPositionForView(view)).getIncident();
+                                notifyMe("open incident:" + clickIM.getIncidentID().toString());
+                                Intent intent = new Intent(getApplicationContext(), ShowIncident.class);
+                                intent.putExtra("im", clickIM.getIncidentID().toString());
+                                intent.putExtra("title", clickIM.getTitle().toString());
+                                intent.putExtra("status", clickIM.getStatus().toString());
+                                intent.putExtra("description", clickIM.getDescription().toString());
+                                intent.putExtra("service", clickIM.getService().toString());
+                                startActivity(intent);
+                            }
+                        }
+                );
             } catch (Exception e) {
 
                 Log.e("MainActivity", e.getMessage(), e);
@@ -170,7 +206,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void notifyMe(String m){
+
+    public void notifyMe(String m) {
         Context context = getApplicationContext();
         CharSequence text = "Hello toast!";
         int duration = Toast.LENGTH_LONG;

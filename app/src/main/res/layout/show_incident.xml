@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ShowIncident"
+    tools:showIn="@layout/show_incident">
+
+
+    //Labels
+
+    <TextView
+        android:id="@+id/im_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/im_label" />
+
+    <TextView
+        android:id="@+id/title_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/im_label"
+        android:layout_marginTop="25dp"
+        android:text="@string/title_label" />
+
+    <TextView
+        android:id="@+id/status_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/title_label"
+        android:layout_marginTop="25dp"
+        android:text="@string/status_label" />
+
+
+    <TextView
+        android:id="@+id/description_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/status_label"
+        android:layout_marginTop="25dp"
+        android:text="@string/description_label" />
+
+
+    <TextView
+        android:id="@+id/service_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/description_label"
+        android:layout_marginTop="25dp"
+        android:text="@string/service_label" />
+
+
+    //Values
+
+    <TextView
+        android:id="@+id/im_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="50dp"
+        android:layout_toRightOf="@+id/im_label"
+        android:text="@string/im_value" />
+
+    <TextView
+        android:id="@+id/title_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/title_label"
+        android:layout_marginLeft="50dp"
+        android:layout_toRightOf="@+id/title_label"
+        android:text="@string/title_value" />
+
+    <TextView
+        android:id="@+id/status_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/status_label"
+        android:layout_marginLeft="50dp"
+        android:layout_toRightOf="@+id/status_label"
+        android:text="@string/status_value" />
+
+
+    <TextView
+        android:id="@+id/description_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/description_label"
+        android:layout_marginLeft="50dp"
+        android:layout_toRightOf="@+id/description_label"
+        android:text="@string/description_value" />
+
+
+    <TextView
+        android:id="@+id/service_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/service_label"
+        android:layout_marginLeft="50dp"
+        android:layout_toRightOf="@+id/service_label"
+        android:text="@string/service_value" />
+</RelativeLayout>
+
+
+
+
+
+
+
