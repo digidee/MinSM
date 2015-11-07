@@ -108,6 +108,7 @@
         android:layout_marginLeft="50dp"
         android:layout_toRightOf="@+id/service_label"
         android:text="@string/service_value" />
+
 </RelativeLayout>
 
 

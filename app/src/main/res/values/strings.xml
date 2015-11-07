@@ -59,5 +59,9 @@
     <string name="description_value">[Description]</string>
     <string name="service_value">[Service]</string>
 
+    //Buttons
+    <string name="resolve_incident">Resolve Incident</string>
+    <string name="update_incident">Update Incident</string>
+
 
 </resources>

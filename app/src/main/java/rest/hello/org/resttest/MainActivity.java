@@ -3,8 +3,10 @@ package rest.hello.org.resttest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,18 @@ import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.http.HttpAuthentication;
+import org.springframework.http.HttpBasicAuthentication;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.Collections;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -27,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
     // TEST OBJECT JSON
     //*************************
     //using JSONObject as test
-    ObjectMapper mapper = new ObjectMapper();
-    Object_TestJSON JSONObject;
+/*    ObjectMapper mapper = new ObjectMapper();
+    Object_TestJSON JSONObject;*/
     //**************************
     // TEST OBJECT JSON
     //*************************
@@ -40,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private String[] textIM, textTitle;
     private Integer[] image_id;
     private String crash;
-
+    Object_Incident incident;
     private Activity act;
     ListView lv;
 
@@ -55,10 +69,13 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Synchronizing with Service Manager", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Refreshing list. Fetched "+incident.getCount()+" incidents."+ " Total "+incident.getTotalcount()+" incidents assigned to you", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
+
+
                 new HttpRequestTask().execute();
+
             }
         });
 
@@ -68,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
         //using JSONObject as test
         ObjectMapper mapper = new ObjectMapper();
+
 
 
     }
@@ -87,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
             try {
 
 
-/*                //Get Preferences Data
+
+                //Get Preferences Data
                 SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 String strUserName = SP.getString("username", "falcon");
                 String strPassword = SP.getString("password", "");
@@ -99,11 +118,11 @@ public class MainActivity extends AppCompatActivity {
 
                 // The connection URL - Building a parameterized URL
                 String url = strServer + ":" + strPort + "/SM/9/rest/incidents";
-
                 UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                         .queryParam("view", "expand")
                         .queryParam("count", strIncidentCount)
-                        .queryParam("assignee.name", strUserName);
+                        .queryParam("assignee.name", strUserName)
+                        .queryParam("problem.status~", "Closed");
                 String paramURL = builder.build().encode().toUri().toString();
 
                 //Logging username, password and url
@@ -122,7 +141,9 @@ public class MainActivity extends AppCompatActivity {
 
                 response = restTemplate.exchange(paramURL, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Object_Incident.class);
                 Log.e("MainActivity", response.getBody().getCount().toString());
-                return response.getBody();*/
+
+                incident = response.getBody();
+                return incident;
 
 
                 //**************************
@@ -130,9 +151,9 @@ public class MainActivity extends AppCompatActivity {
                 //*************************
                 //using JSONObject as test
                 //JSON from String to Object
-                JSONObject = new Object_TestJSON();
-                Object_Incident objInc = mapper.readValue(JSONObject.getJSONObject(), Object_Incident.class);
-                return objInc;
+ /*               JSONObject = new Object_TestJSON();
+                incident = mapper.readValue(JSONObject.getJSONObject(), Object_Incident.class);
+                return incident;*/
                 //**************************
                 // TEST OBJECT JSON
                 //*************************
@@ -151,12 +172,12 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(final Object_Incident incident) {
             try {
 
-                TextView incidentView = (TextView) findViewById(R.id.totalview_value);
+/*                TextView incidentView = (TextView) findViewById(R.id.totalview_value);
                 TextView incidentCount = (TextView) findViewById(R.id.totalcount_value);
                 TextView incidentName = (TextView) findViewById(R.id.resourcename_value);
                 incidentView.setText(incident.getCount().toString());
                 incidentCount.setText(incident.getTotalcount().toString());
-                incidentName.setText(incident.getResourceName());
+                incidentName.setText(incident.getResourceName());*/
 
 
                 Log.e("MainActivity", "Count: " + incident.getCount());
@@ -187,8 +208,8 @@ public class MainActivity extends AppCompatActivity {
 
                                 //Take action here.
                                 Object_Incident_ clickIM = incident.getContent().get(lv.getPositionForView(view)).getIncident();
-                                notifyMe("open incident:" + clickIM.getIncidentID().toString());
-                                Intent intent = new Intent(getApplicationContext(), ShowIncident.class);
+                               // notifyMe("open incident:" + clickIM.getIncidentID().toString());
+                                Intent intent = new Intent(getApplicationContext(), IncidentActivity.class);
                                 intent.putExtra("im", clickIM.getIncidentID().toString());
                                 intent.putExtra("title", clickIM.getTitle().toString());
                                 intent.putExtra("status", clickIM.getStatus().toString());
@@ -202,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.e("MainActivity", e.getMessage(), e);
             }
-            notifyMe(crash);
+           // notifyMe(crash);
         }
     }
 

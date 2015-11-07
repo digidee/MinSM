@@ -25,10 +25,11 @@
             android:label="@string/preferences_title"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".ShowIncident"
+            android:name=".IncidentActivity"
             android:label="@string/incident_label"
             android:theme="@style/AppTheme.NoActionBar">
-            ></activity>
+            >
+        </activity>
 
     </application>
 
