@@ -15,20 +15,23 @@
 
     //Labels
 
+<!--
     <TextView
         android:id="@+id/im_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/im_label" />
+-->
 
     <TextView
         android:id="@+id/title_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/im_label"
         android:layout_marginTop="25dp"
         android:text="@string/title_label" />
+        <!--android:layout_below="@+id/im_label"-->
+
 
     <TextView
         android:id="@+id/status_label"
@@ -62,14 +65,14 @@
 
     //Values
 
-    <TextView
+<!--    <TextView
         android:id="@+id/im_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="50dp"
         android:layout_toRightOf="@+id/im_label"
-        android:text="@string/im_value" />
+        android:text="@string/im_value" />-->
 
     <TextView
         android:id="@+id/title_value"

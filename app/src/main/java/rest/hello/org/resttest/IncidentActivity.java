@@ -53,9 +53,6 @@ public class IncidentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.incident_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         //Getting intent data from MainActivity
         Intent intent = getIntent();
         String im = intent.getStringExtra("im");
@@ -64,17 +61,23 @@ public class IncidentActivity extends AppCompatActivity {
         String description = intent.getStringExtra("description");
         String service = intent.getStringExtra("service");
 
-        TextView imView = (TextView) findViewById(R.id.im_value);
+       // TextView imView = (TextView) findViewById(R.id.im_value);
         TextView titleView = (TextView) findViewById(R.id.title_value);
         TextView statusView = (TextView) findViewById(R.id.status_value);
         TextView descView = (TextView) findViewById(R.id.description_value);
         TextView serviceView = (TextView) findViewById(R.id.service_value);
 
-        imView.setText(im);
+        //imView.setText(im);
         titleView.setText(title);
         statusView.setText(status);
         descView.setText(description);
         serviceView.setText(service);
+
+
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle(getString(R.string.incident_label)+" "+im);
 
 
 
