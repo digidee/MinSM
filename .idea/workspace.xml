@@ -52,17 +52,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/rest/hello/org/resttest/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-18.0">
-              <caret line="281" column="76" selection-start-line="281" selection-start-column="76" selection-end-line="281" selection-end-column="76" />
+            <state vertical-scroll-proportion="0.676815">
+              <caret line="163" column="20" selection-start-line="163" selection-start-column="16" selection-end-line="163" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3581#3831#0" expanded="true" />
-                <element signature="e#3830#3831#0" expanded="true" />
-                <element signature="e#8342#8491#0" expanded="true" />
-                <element signature="e#8490#8491#0" expanded="true" />
+                <element signature="e#3521#3771#0" expanded="true" />
+                <element signature="e#3770#3771#0" expanded="true" />
+                <element signature="e#9536#9685#0" expanded="true" />
+                <element signature="e#9684#9685#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -78,11 +78,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IncidentActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="IncidentActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/rest/hello/org/resttest/IncidentActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6342016">
-              <caret line="85" column="25" selection-start-line="85" selection-start-column="25" selection-end-line="85" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2681#2715#0" expanded="true" />
@@ -1662,9 +1662,9 @@
         <option value="$PROJECT_DIR$/app/src/main/res/xml/preferences.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/arrays.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/rest/hello/org/resttest/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_incident.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/rest/hello/org/resttest/IncidentActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/rest/hello/org/resttest/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -2110,10 +2110,10 @@
           <caret line="120" column="80" selection-start-line="120" selection-start-column="80" selection-end-line="120" selection-end-column="80" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3581#3831#0" expanded="true" />
-            <element signature="e#3830#3831#0" expanded="true" />
-            <element signature="e#8342#8491#0" expanded="true" />
-            <element signature="e#8490#8491#0" expanded="true" />
+            <element signature="e#3521#3771#0" expanded="true" />
+            <element signature="e#3770#3771#0" expanded="true" />
+            <element signature="e#9536#9685#0" expanded="true" />
+            <element signature="e#9684#9685#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2395,24 +2395,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/rest/hello/org/resttest/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.0">
-          <caret line="281" column="76" selection-start-line="281" selection-start-column="76" selection-end-line="281" selection-end-column="76" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3581#3831#0" expanded="true" />
-            <element signature="e#3830#3831#0" expanded="true" />
-            <element signature="e#8342#8491#0" expanded="true" />
-            <element signature="e#8490#8491#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/rest/hello/org/resttest/IncidentActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6342016">
-          <caret line="85" column="25" selection-start-line="85" selection-start-column="25" selection-end-line="85" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2681#2715#0" expanded="true" />
@@ -2423,6 +2409,20 @@
             <element signature="e#4194#4454#0" expanded="true" />
             <element signature="e#4453#4454#0" expanded="true" />
             <element signature="e#6497#6505#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/rest/hello/org/resttest/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.676815">
+          <caret line="163" column="20" selection-start-line="163" selection-start-column="16" selection-end-line="163" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3521#3771#0" expanded="true" />
+            <element signature="e#3770#3771#0" expanded="true" />
+            <element signature="e#9536#9685#0" expanded="true" />
+            <element signature="e#9684#9685#0" expanded="true" />
           </folding>
         </state>
       </provider>

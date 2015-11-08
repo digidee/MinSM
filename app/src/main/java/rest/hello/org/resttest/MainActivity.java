@@ -20,12 +20,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.json.JSONObject;
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
@@ -153,17 +151,7 @@ public class MainActivity extends AppCompatActivity {
             JSONObject = new Object_TestJSON();
             incident = mapper.readValue(JSONObject.getJSONObject(), Object_Incident.class);
 
-            textIM = new String[incident.getCount()];
-            textTitle = new String[incident.getCount()];
-            image_id = new Integer[incident.getCount()];
-            for (int i = 0; i < incident.getCount(); i++) {
-                textIM[i] = incident.getContent().get(i).getIncident().getIncidentID().toString();
-                textTitle[i] = incident.getContent().get(i).getIncident().getTitle().toString();
-                image_id[i] = R.mipmap.ic_launcher;
-            }
-            adapter = new CustomListAdapter(act, image_id, textIM, textTitle);
-            lv = (ListView) findViewById(R.id.listview);
-            lv.setAdapter(adapter);
+            createList(incident);
 
         } catch (Exception e) {
             crash = e.getMessage();
@@ -171,6 +159,36 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    public void createList(final Object_Incident incident) {
+        textIM = new String[incident.getCount()];
+        textTitle = new String[incident.getCount()];
+        image_id = new Integer[incident.getCount()];
+        for (int i = 0; i < incident.getCount(); i++) {
+            textIM[i] = incident.getContent().get(i).getIncident().getIncidentID().toString();
+            textTitle[i] = incident.getContent().get(i).getIncident().getTitle().toString();
+            image_id[i] = R.mipmap.ic_launcher;
+        }
+        adapter = new CustomListAdapter(act, image_id, textIM, textTitle);
+        lv = (ListView) findViewById(R.id.listview);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> arg0, View view,
+                                            int position, long id) {
+
+                        Intent intent = new Intent(getApplicationContext(), IncidentActivity.class);
+                        intent.putExtra("im", incident.getContent().get(lv.getPositionForView(view)).getIncident().getIncidentID().toString());
+                        intent.putExtra("title", incident.getContent().get(lv.getPositionForView(view)).getIncident().getTitle().toString());
+                        intent.putExtra("status", incident.getContent().get(lv.getPositionForView(view)).getIncident().getStatus().toString());
+                        intent.putExtra("description", incident.getContent().get(lv.getPositionForView(view)).getIncident().getDescription().toString());
+                        intent.putExtra("service", incident.getContent().get(lv.getPositionForView(view)).getIncident().getService().toString());
+                        startActivity(intent);
+                    }
+                }
+        );
     }
 
 
@@ -241,64 +259,11 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     pDialog.dismiss();
                 }
-            }, 2000L);
-
-            try {
-
-/*                TextView incidentView = (TextView) findViewById(R.id.totalview_value);
-                TextView incidentCount = (TextView) findViewById(R.id.totalcount_value);
-                TextView incidentName = (TextView) findViewById(R.id.resourcename_value);
-                incidentView.setText(incident.getCount().toString());
-                incidentCount.setText(incident.getTotalcount().toString());
-                incidentName.setText(incident.getResourceName());*/
-
-
-//                Log.e("MainActivity", "Count: " + incident.getCount());
-                //              Log.e("MainActivity", "Total Count: " + incident.getTotalcount());
-
-                //*****************
-                //Listview
-                //****************
-                if (incident != null) {
-                    textIM = new String[incident.getCount()];
-                    textTitle = new String[incident.getCount()];
-                    image_id = new Integer[incident.getCount()];
-                    for (int i = 0; i < incident.getCount(); i++) {
-                        textIM[i] = incident.getContent().get(i).getIncident().getIncidentID().toString();
-                        textTitle[i] = incident.getContent().get(i).getIncident().getTitle().toString();
-                        image_id[i] = R.mipmap.ic_launcher;
-                    }
-                }
-
-
-                adapter = new CustomListAdapter(act, image_id, textIM, textTitle);
-                lv = (ListView) findViewById(R.id.listview);
-                lv.setAdapter(adapter);
-
-                lv.setOnItemClickListener(
-                        new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> arg0, View view,
-                                                    int position, long id) {
-
-                                //Take action here.
-                                Object_Incident_ clickIM = incident.getContent().get(lv.getPositionForView(view)).getIncident();
-                                // notifyMe("open incident:" + clickIM.getIncidentID().toString());
-                                Intent intent = new Intent(getApplicationContext(), IncidentActivity.class);
-                                intent.putExtra("im", clickIM.getIncidentID().toString());
-                                intent.putExtra("title", clickIM.getTitle().toString());
-                                intent.putExtra("status", clickIM.getStatus().toString());
-                                intent.putExtra("description", clickIM.getDescription().toString());
-                                intent.putExtra("service", clickIM.getService().toString());
-                                startActivity(intent);
-                            }
-                        }
-                );
-
-            } catch (Exception e ){
-                Log.e("MainActivity", e.getMessage(), e);
-                notifyMe(e.getMessage());
+            }, 1000L);
+            if (incident != null) {
+                createList(incident);
             }
+
         }
     }
 
