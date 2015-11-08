@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -42,6 +43,7 @@ public class IncidentActivity extends AppCompatActivity {
     String strPassword;
     String strServer;
     String strPort;
+    boolean demo;
     String url;
 
 
@@ -75,15 +77,17 @@ public class IncidentActivity extends AppCompatActivity {
         serviceView.setText(service);
 
 
+
+
         //Getting preference data
         SP = PreferenceManager.getDefaultSharedPreferences(this);
         strUserName = SP.getString("username", "falcon");
         strPassword = SP.getString("password", "");
         strServer = SP.getString("server", "http://192.168.0.26");
         strPort = SP.getString("port", "13080");
+        demo = SP.getBoolean("demo", false);
         // The connection URL - Building a parameterized URL
-        url = strServer + ":" + strPort + "/SM/9/rest/incidents/"+im+"/";
-
+        url = strServer + ":" + strPort + "/SM/9/rest/incidents/" + im + "/";
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -94,11 +98,9 @@ public class IncidentActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
 
 
-
             }
 
         });
-
 
 
         FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
@@ -108,8 +110,7 @@ public class IncidentActivity extends AppCompatActivity {
                 Snackbar.make(view, "Updating incident", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                new HttpRequestTask().execute();
-
+                if (!demo) new HttpRequestTask().execute();
 
 
             }
@@ -150,30 +151,12 @@ public class IncidentActivity extends AppCompatActivity {
             return true;
         }
         if (id == R.id.action_refresh) {
-          // new HttpRequestTask().execute();
+            // new HttpRequestTask().execute();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     private class HttpRequestTask extends AsyncTask<Void, Void, Void> {
@@ -184,15 +167,9 @@ public class IncidentActivity extends AppCompatActivity {
             try {
 
 
-
-
-
-
-
                 RestTemplate restTemplate = new RestTemplate();
 
                 Log.e("MainActivity", "url: " + url);
-
 
 
                 // Populate the HTTP Basic Authentitcation header with the username and password
@@ -217,16 +194,7 @@ public class IncidentActivity extends AppCompatActivity {
                 // response = restTemplate.postForObject(url, new HttpEntity<String>(JSONTestobject,requestHeaders), String.class, JSONTestobject);
 
 
-
                 Log.e("MainActivity", response.toString());
-
-
-
-
-
-
-
-
 
 
             } catch (Exception e) {
@@ -238,18 +206,6 @@ public class IncidentActivity extends AppCompatActivity {
             return null;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

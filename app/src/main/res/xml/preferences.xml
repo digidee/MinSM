@@ -1,30 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <EditTextPreference android:title="Username"
-        android:key="username"
+    <EditTextPreference
         android:defaultValue="falcon"
-        android:summary="Please provide your Service Manager username"></EditTextPreference>
-    <EditTextPreference android:title="Password"
-        android:key="password"
-        android:inputType="textPassword"
+        android:key="username"
+        android:summary="Please provide your Service Manager username"
+        android:title="Username"></EditTextPreference>
+    <EditTextPreference
         android:defaultValue=""
-        android:summary="Please provide your Service Manager password"></EditTextPreference>
-    <EditTextPreference android:title="Server"
-        android:key="server"
+        android:inputType="textPassword"
+        android:key="password"
+        android:summary="Please provide your Service Manager password"
+        android:title="Password"></EditTextPreference>
+    <EditTextPreference
         android:defaultValue="http://192.168.0.26"
-        android:summary="Please provide your Service Manager server"></EditTextPreference>
-    <EditTextPreference android:title="Port"
-        android:key="port"
+        android:key="server"
+        android:summary="Please provide your Service Manager server"
+        android:title="Server"></EditTextPreference>
+    <EditTextPreference
         android:defaultValue="13080"
-        android:summary="Please provide your Service Manager port"></EditTextPreference>
-    <ListPreference     android:title="Incident Count"
-        android:summary="Select the count of incidents you would like"
-        android:key="incidentCount"
+        android:key="port"
+        android:summary="Please provide your Service Manager port"
+        android:title="Port"></EditTextPreference>
+    <ListPreference
         android:defaultValue="10"
         android:entries="@array/listArray"
-        android:entryValues="@array/listValues" />
-    <CheckBoxPreference android:title="Notify on New Incidents"
+        android:entryValues="@array/listValues"
+        android:key="incidentCount"
+        android:summary="Select the count of incidents you would like"
+        android:title="Incident Count" />
+    <CheckBoxPreference
         android:defaultValue="false"
+        android:key="demo"
+        android:summary="This option if selected will use a predefined JSON Object for demo purposes."
+        android:title="Demo Mode" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="notifyNew"
         android:summary="This option if selected will allow the application to notify you when receiving new incidents."
-        android:key="notifyNew" />
+        android:title="Notify on New Incidents" />
 </PreferenceScreen>

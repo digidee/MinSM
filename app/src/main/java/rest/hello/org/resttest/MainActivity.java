@@ -1,14 +1,17 @@
 package rest.hello.org.resttest;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,6 +25,7 @@ import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.json.JSONObject;
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
@@ -40,13 +44,16 @@ public class MainActivity extends AppCompatActivity {
     //**************************
     // TEST OBJECT JSON
     //*************************
-    //using JSONObject as test
-/*    ObjectMapper mapper = new ObjectMapper();
-    Object_TestJSON JSONObject;*/
+    ObjectMapper mapper;
+    Object_TestJSON JSONObject;
     //**************************
     // TEST OBJECT JSON
     //*************************
-    //using JSONObject as test
+
+
+    //Progress bar
+    ProgressDialog pDialog;
+
 
     //*****************
     //Listview
@@ -57,6 +64,22 @@ public class MainActivity extends AppCompatActivity {
     Object_Incident incident;
     private Activity act;
     ListView lv;
+    CustomListAdapter adapter;
+
+    //*****************
+    //Preference Data Declaration
+    //****************
+    SharedPreferences SP;
+    String strUserName;
+    String strPassword;
+    String strServer;
+    String strPort;
+    String strIncidentCount;
+    boolean bAppUpdates;
+    boolean demoMode;
+
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,56 +88,109 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Get Preferences Data
+        SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        demoMode = SP.getBoolean("demo", false);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Refreshing list. Fetched "+incident.getCount()+" incidents."+ " Total "+incident.getTotalcount()+" incidents assigned to you", Snackbar.LENGTH_LONG)
+
+
+                if (demoMode) JSONObjectList();
+                else new HttpRequestTask().execute();
+
+                Snackbar.make(view, "Refreshing list", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-
-
-
-                new HttpRequestTask().execute();
 
             }
         });
 
 
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Getting Incidents ...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+
         act = this;
 
-
-        //using JSONObject as test
-        ObjectMapper mapper = new ObjectMapper();
-
-
+        final SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mSwipeRefreshLayout.setRefreshing(false);
+                if (!demoMode) new HttpRequestTask().execute();
+            }
+        });
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        new HttpRequestTask().execute();
+        demoMode = SP.getBoolean("demo", false);
+        if (demoMode) JSONObjectList();
+        else new HttpRequestTask().execute();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        demoMode = SP.getBoolean("demo", false);
+        if (demoMode) JSONObjectList();
+        else new HttpRequestTask().execute();
+    }
+
+    public void JSONObjectList() {
+        try {
+            //**************************
+            // TEST OBJECT JSON
+            //*************************
+            //using JSONObject as test
+            //JSON from String to Object
+            mapper = new ObjectMapper();
+            JSONObject = new Object_TestJSON();
+            incident = mapper.readValue(JSONObject.getJSONObject(), Object_Incident.class);
+
+            textIM = new String[incident.getCount()];
+            textTitle = new String[incident.getCount()];
+            image_id = new Integer[incident.getCount()];
+            for (int i = 0; i < incident.getCount(); i++) {
+                textIM[i] = incident.getContent().get(i).getIncident().getIncidentID().toString();
+                textTitle[i] = incident.getContent().get(i).getIncident().getTitle().toString();
+                image_id[i] = R.mipmap.ic_launcher;
+            }
+            adapter = new CustomListAdapter(act, image_id, textIM, textTitle);
+            lv = (ListView) findViewById(R.id.listview);
+            lv.setAdapter(adapter);
+
+        } catch (Exception e) {
+            crash = e.getMessage();
+            Log.e("MainActivity", e.getMessage(), e);
+
+        }
+
     }
 
 
     private class HttpRequestTask extends AsyncTask<Void, Void, Object_Incident> {
-
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog.show();
+        }
 
         @Override
         protected Object_Incident doInBackground(Void... params) {
             try {
 
-
-
-                //Get Preferences Data
-                SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                String strUserName = SP.getString("username", "falcon");
-                String strPassword = SP.getString("password", "");
-                String strServer = SP.getString("server", "http://192.168.0.26");
-                String strPort = SP.getString("port", "13080");
-                String strIncidentCount = SP.getString("incidentCount", "10");
-                boolean bAppUpdates = SP.getBoolean("notifyNew", false);
-
+                strUserName = SP.getString("username", "falcon");
+                strPassword = SP.getString("password", "");
+                strServer = SP.getString("server", "http://192.168.0.26");
+                strPort = SP.getString("port", "13080");
+                strIncidentCount = SP.getString("incidentCount", "10");
+                bAppUpdates = SP.getBoolean("notifyNew", false);
 
                 // The connection URL - Building a parameterized URL
                 String url = strServer + ":" + strPort + "/SM/9/rest/incidents";
@@ -122,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
                         .queryParam("view", "expand")
                         .queryParam("count", strIncidentCount)
                         .queryParam("assignee.name", strUserName)
+                        .queryParam("sort", "number:descending")
                         .queryParam("problem.status~", "Closed");
                 String paramURL = builder.build().encode().toUri().toString();
 
@@ -141,27 +218,14 @@ public class MainActivity extends AppCompatActivity {
 
                 response = restTemplate.exchange(paramURL, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Object_Incident.class);
                 Log.e("MainActivity", response.getBody().getCount().toString());
-
+                Log.e("MainActivity", response.getBody().getTotalcount().toString());
                 incident = response.getBody();
                 return incident;
 
 
-                //**************************
-                // TEST OBJECT JSON
-                //*************************
-                //using JSONObject as test
-                //JSON from String to Object
- /*               JSONObject = new Object_TestJSON();
-                incident = mapper.readValue(JSONObject.getJSONObject(), Object_Incident.class);
-                return incident;*/
-                //**************************
-                // TEST OBJECT JSON
-                //*************************
-
-
             } catch (Exception e) {
-                crash = e.getMessage();
                 Log.e("MainActivity", e.getMessage(), e);
+                notifyMe(e.getMessage());
 
             }
 
@@ -170,6 +234,15 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(final Object_Incident incident) {
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    pDialog.dismiss();
+                }
+            }, 2000L);
+
             try {
 
 /*                TextView incidentView = (TextView) findViewById(R.id.totalview_value);
@@ -180,23 +253,25 @@ public class MainActivity extends AppCompatActivity {
                 incidentName.setText(incident.getResourceName());*/
 
 
-                Log.e("MainActivity", "Count: " + incident.getCount());
-                Log.e("MainActivity", "Total Count: " + incident.getTotalcount());
-
+//                Log.e("MainActivity", "Count: " + incident.getCount());
+                //              Log.e("MainActivity", "Total Count: " + incident.getTotalcount());
 
                 //*****************
                 //Listview
                 //****************
-                textIM = new String[incident.getCount()];
-                textTitle = new String[incident.getCount()];
-                image_id = new Integer[incident.getCount()];
-                for (int i = 0; i < incident.getCount(); i++) {
-                    textIM[i] = incident.getContent().get(i).getIncident().getIncidentID().toString();
-                    textTitle[i] = incident.getContent().get(i).getIncident().getTitle().toString();
-                    image_id[i] = R.mipmap.ic_launcher;
+                if (incident != null) {
+                    textIM = new String[incident.getCount()];
+                    textTitle = new String[incident.getCount()];
+                    image_id = new Integer[incident.getCount()];
+                    for (int i = 0; i < incident.getCount(); i++) {
+                        textIM[i] = incident.getContent().get(i).getIncident().getIncidentID().toString();
+                        textTitle[i] = incident.getContent().get(i).getIncident().getTitle().toString();
+                        image_id[i] = R.mipmap.ic_launcher;
+                    }
                 }
 
-                final CustomListAdapter adapter = new CustomListAdapter(act, image_id, textIM, textTitle);
+
+                adapter = new CustomListAdapter(act, image_id, textIM, textTitle);
                 lv = (ListView) findViewById(R.id.listview);
                 lv.setAdapter(adapter);
 
@@ -208,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 //Take action here.
                                 Object_Incident_ clickIM = incident.getContent().get(lv.getPositionForView(view)).getIncident();
-                               // notifyMe("open incident:" + clickIM.getIncidentID().toString());
+                                // notifyMe("open incident:" + clickIM.getIncidentID().toString());
                                 Intent intent = new Intent(getApplicationContext(), IncidentActivity.class);
                                 intent.putExtra("im", clickIM.getIncidentID().toString());
                                 intent.putExtra("title", clickIM.getTitle().toString());
@@ -219,11 +294,11 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                 );
-            } catch (Exception e) {
 
+            } catch (Exception e ){
                 Log.e("MainActivity", e.getMessage(), e);
+                notifyMe(e.getMessage());
             }
-           // notifyMe(crash);
         }
     }
 
