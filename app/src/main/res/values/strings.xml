@@ -64,4 +64,11 @@
     <string name="update_incident">Update Incident</string>
 
 
+    //Drawer
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_user">User</string>
+    <string name="navigation_drawer_email">Email</string>
+
+
 </resources>

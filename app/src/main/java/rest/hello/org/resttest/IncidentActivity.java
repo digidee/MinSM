@@ -1,7 +1,6 @@
 package rest.hello.org.resttest;
 
-import android.app.Activity;
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -9,14 +8,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import org.springframework.http.HttpAuthentication;
@@ -27,7 +23,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Collections;
 
@@ -47,7 +42,6 @@ public class IncidentActivity extends AppCompatActivity {
     String url;
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +55,7 @@ public class IncidentActivity extends AppCompatActivity {
         String description = intent.getStringExtra("description");
         String service = intent.getStringExtra("service");
 
-       // TextView imView = (TextView) findViewById(R.id.im_value);
+        // TextView imView = (TextView) findViewById(R.id.im_value);
         TextView titleView = (TextView) findViewById(R.id.title_value);
         TextView statusView = (TextView) findViewById(R.id.status_value);
         TextView descView = (TextView) findViewById(R.id.description_value);
@@ -73,14 +67,13 @@ public class IncidentActivity extends AppCompatActivity {
         descView.setText(description);
         serviceView.setText(service);
 
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(getString(R.string.incident_label) + " " + im);
         setSupportActionBar(toolbar);
-        setTitle(getString(R.string.incident_label)+" "+im);
 
-
-
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         //Getting preference data
         SP = PreferenceManager.getDefaultSharedPreferences(this);
@@ -149,12 +142,12 @@ public class IncidentActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent i = new Intent(this, PreferencesActivity.class);
+            Intent i = new Intent(this, SettingsPreferencesActivity.class);
             startActivity(i);
             return true;
         }
         if (id == R.id.action_refresh) {
-            // new HttpRequestTask().execute();
+            if (!demo) new HttpRequestTask().execute();
             return true;
         }
 

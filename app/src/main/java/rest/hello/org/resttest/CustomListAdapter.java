@@ -10,16 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class CustomListAdapter extends ArrayAdapter<String> {
-    String[] textIM, textTitle;
-    Integer[] image_id;
+    String[] textIM, textTitle, textStatus;
+    //Integer[] image_id;
     Context context;
 
-    public CustomListAdapter(Activity context, Integer[] image_id, String[] textIM, String[] textTitle) {
+    public CustomListAdapter(Activity context, String[] textIM, String[] textStatus, String[] textTitle) {
         super(context, R.layout.list_row, textIM);
         // TODO Auto-generated constructor stub
         this.textIM = textIM;
         this.textTitle = textTitle;
-        this.image_id = image_id;
+        this.textStatus = textStatus;
         this.context = context;
     }
 
@@ -32,10 +32,12 @@ public class CustomListAdapter extends ArrayAdapter<String> {
                 true);
         TextView textViewIM = (TextView) single_row.findViewById(R.id.textViewIM);
         TextView textViewTitle = (TextView) single_row.findViewById(R.id.textViewTitle);
-        ImageView imageView = (ImageView) single_row.findViewById(R.id.imageView);
+        TextView textViewStatus = (TextView) single_row.findViewById(R.id.textViewStatus);
+//        ImageView imageView = (ImageView) single_row.findViewById(R.id.imageView);
         textViewIM.setText(textIM[position]);
         textViewTitle.setText(textTitle[position]);
-        imageView.setImageResource(image_id[position]);
+        textViewStatus.setText(textStatus[position]);
+//      imageView.setImageResource(image_id[position]);
         return single_row;
     }
 

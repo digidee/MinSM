@@ -10,8 +10,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -36,7 +40,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Collections;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     //**************************
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     //*****************
     //Listview
     //****************
-    private String[] textIM, textTitle;
+    private String[] textIM, textTitle, textStatus;
     private Integer[] image_id;
     private String crash;
     Object_Incident incident;
@@ -84,27 +88,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+
         setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
 
         //Get Preferences Data
         SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         demoMode = SP.getBoolean("demo", false);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                if (demoMode) JSONObjectList();
-                else new HttpRequestTask().execute();
-
-                Snackbar.make(view, "Refreshing list", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-            }
-        });
-
 
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Getting Incidents ...");
@@ -163,14 +163,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void createList(final Object_Incident incident) {
         textIM = new String[incident.getCount()];
+        textStatus = new String[incident.getCount()];
         textTitle = new String[incident.getCount()];
         image_id = new Integer[incident.getCount()];
         for (int i = 0; i < incident.getCount(); i++) {
             textIM[i] = incident.getContent().get(i).getIncident().getIncidentID().toString();
             textTitle[i] = incident.getContent().get(i).getIncident().getTitle().toString();
-            image_id[i] = R.mipmap.ic_launcher;
+            textStatus[i] = incident.getContent().get(i).getIncident().getStatus().toString();
+            //image_id[i] = R.mipmap.ic_launcher;
         }
-        adapter = new CustomListAdapter(act, image_id, textIM, textTitle);
+        adapter = new CustomListAdapter(act, textIM, textStatus, textTitle);
         lv = (ListView) findViewById(R.id.listview);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(
@@ -243,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
 
             } catch (Exception e) {
                 Log.e("MainActivity", e.getMessage(), e);
-                notifyMe(e.getMessage());
+//                notifyMe(e.getMessage());
 
             }
 
@@ -293,15 +295,44 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent i = new Intent(this, PreferencesActivity.class);
+            Intent i = new Intent(this, SettingsPreferencesActivity.class);
             startActivity(i);
             return true;
         }
+
         if (id == R.id.action_refresh) {
-            new HttpRequestTask().execute();
+            if (!demoMode) new HttpRequestTask().execute();
             return true;
         }
 
+
         return super.onOptionsItemSelected(item);
     }
+
+
+    //TESTING MENU
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.user_settings) {
+            Intent i = new Intent(this, SettingsUserActivity.class);
+            startActivity(i);
+        } else if (id == R.id.view_settings) {
+            Intent i = new Intent(this, SettingsViewActivity.class);
+            startActivity(i);
+
+        } else if (id == R.id.notifications) {
+            Intent i = new Intent(this, SettingsNotificationActivity.class);
+            startActivity(i);
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
 }

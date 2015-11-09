@@ -21,14 +21,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PreferencesActivity"
+            android:name=".SettingsPreferencesActivity"
+            android:label="@string/preferences_title"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".SettingsUserActivity"
+            android:label="@string/preferences_title"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".SettingsViewActivity"
+            android:label="@string/preferences_title"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".SettingsNotificationActivity"
             android:label="@string/preferences_title"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".IncidentActivity"
             android:label="@string/incident_label"
-            android:theme="@style/AppTheme.NoActionBar">
-            >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity">
         </activity>
 
     </application>
