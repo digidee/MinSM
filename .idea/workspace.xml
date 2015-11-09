@@ -55,14 +55,14 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/rest/hello/org/resttest/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.676815">
-              <caret line="163" column="20" selection-start-line="163" selection-start-column="16" selection-end-line="163" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.352459">
+              <caret line="246" column="0" selection-start-line="246" selection-start-column="0" selection-end-line="246" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3521#3771#0" expanded="true" />
                 <element signature="e#3770#3771#0" expanded="true" />
-                <element signature="e#9536#9685#0" expanded="true" />
-                <element signature="e#9684#9685#0" expanded="true" />
+                <element signature="e#9538#9687#0" expanded="true" />
+                <element signature="e#9686#9687#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1821,7 +1821,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="65539651" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_23_x86" />
     <property name="FullScreen" value="false" />
     <property name="OverrideImplement.combined" value="true" />
@@ -2112,8 +2112,8 @@
             <element signature="imports" expanded="true" />
             <element signature="e#3521#3771#0" expanded="true" />
             <element signature="e#3770#3771#0" expanded="true" />
-            <element signature="e#9536#9685#0" expanded="true" />
-            <element signature="e#9684#9685#0" expanded="true" />
+            <element signature="e#9538#9687#0" expanded="true" />
+            <element signature="e#9686#9687#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2415,14 +2415,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/rest/hello/org/resttest/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.676815">
-          <caret line="163" column="20" selection-start-line="163" selection-start-column="16" selection-end-line="163" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.352459">
+          <caret line="246" column="0" selection-start-line="246" selection-start-column="0" selection-end-line="246" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3521#3771#0" expanded="true" />
             <element signature="e#3770#3771#0" expanded="true" />
-            <element signature="e#9536#9685#0" expanded="true" />
-            <element signature="e#9684#9685#0" expanded="true" />
+            <element signature="e#9538#9687#0" expanded="true" />
+            <element signature="e#9686#9687#0" expanded="true" />
           </folding>
         </state>
       </provider>
