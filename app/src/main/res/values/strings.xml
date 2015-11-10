@@ -51,6 +51,8 @@
     <string name="status_label">Status</string>
     <string name="description_label">Description</string>
     <string name="service_label">Service</string>
+    <string name="openby_label">Opened By</string>
+
     //Values
     <string name="incident_value">[Incident]</string>
     <string name="im_value">[IM]</string>
@@ -58,6 +60,7 @@
     <string name="status_value">[Status]</string>
     <string name="description_value">[Description]</string>
     <string name="service_value">[Service]</string>
+    <string name="openby_value">{Opened By]</string>
 
     //Buttons
     <string name="resolve_incident">Resolve Incident</string>

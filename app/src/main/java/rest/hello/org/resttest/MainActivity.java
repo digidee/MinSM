@@ -186,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         intent.putExtra("title", incident.getContent().get(lv.getPositionForView(view)).getIncident().getTitle().toString());
                         intent.putExtra("status", incident.getContent().get(lv.getPositionForView(view)).getIncident().getStatus().toString());
                         intent.putExtra("description", incident.getContent().get(lv.getPositionForView(view)).getIncident().getDescription().toString());
+                        intent.putExtra("openby", incident.getContent().get(lv.getPositionForView(view)).getIncident().getOpenedBy().toString());
                         intent.putExtra("service", incident.getContent().get(lv.getPositionForView(view)).getIncident().getService().toString());
                         startActivity(intent);
                     }
