@@ -1,4 +1,3 @@
-
 package rest.hello.org.resttest;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
 @JsonPropertyOrder({
-    "Incident"
+        "Incident"
 })
 public class Object_Content {
 
@@ -23,7 +22,7 @@ public class Object_Content {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
+     *
      * @return
      *     The Incident
      */
@@ -33,7 +32,7 @@ public class Object_Content {
     }
 
     /**
-     * 
+     *
      * @param Incident
      *     The Incident
      */

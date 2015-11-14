@@ -16,32 +16,33 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
 @JsonPropertyOrder({
-    "AffectedCI",
-    "Area",
-    "Assignee",
-    "AssignmentGroup",
-    "Category",
-    "ClosedBy",
-    "ClosedTime",
-    "ClosureCode",
-    "Company",
-    "Description",
-    "Impact",
-    "IncidentID",
-    "Location",
-    "OpenTime",
-    "OpenedBy",
-    "ProblemType",
-    "SLAAgreementID",
-    "Service",
-    "Solution",
-    "Status",
-    "Subarea",
-    "TicketOwner",
-    "Title",
-    "UpdatedBy",
-    "UpdatedTime",
-    "Urgency"
+        "AffectedCI",
+        "Area",
+        "Assignee",
+        "AssignmentGroup",
+        "Category",
+        "ClosedBy",
+        "ClosedTime",
+        "ClosureCode",
+        "Company",
+        "Description",
+        "Impact",
+        "IncidentID",
+        "JournalUpdates",
+        "Location",
+        "OpenTime",
+        "OpenedBy",
+        "ProblemType",
+        "SLAAgreementID",
+        "Service",
+        "Solution",
+        "Status",
+        "Subarea",
+        "TicketOwner",
+        "Title",
+        "UpdatedBy",
+        "UpdatedTime",
+        "Urgency"
 })
 public class Object_Incident_ {
 
@@ -69,6 +70,8 @@ public class Object_Incident_ {
     private String Impact;
     @JsonProperty("IncidentID")
     private String IncidentID;
+    @JsonProperty("JournalUpdates")
+    private List<String> JournalUpdates = new ArrayList<String>();
     @JsonProperty("Location")
     private String Location;
     @JsonProperty("OpenTime")
@@ -101,7 +104,7 @@ public class Object_Incident_ {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
+     *
      * @return
      *     The AffectedCI
      */
@@ -111,7 +114,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param AffectedCI
      *     The AffectedCI
      */
@@ -121,7 +124,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The Area
      */
@@ -131,7 +134,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param Area
      *     The Area
      */
@@ -141,7 +144,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The Assignee
      */
@@ -151,7 +154,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param Assignee
      *     The Assignee
      */
@@ -161,7 +164,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The AssignmentGroup
      */
@@ -171,7 +174,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param AssignmentGroup
      *     The AssignmentGroup
      */
@@ -181,7 +184,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The Category
      */
@@ -191,7 +194,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param Category
      *     The Category
      */
@@ -201,7 +204,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The ClosedBy
      */
@@ -211,7 +214,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param ClosedBy
      *     The ClosedBy
      */
@@ -221,7 +224,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The ClosedTime
      */
@@ -231,7 +234,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param ClosedTime
      *     The ClosedTime
      */
@@ -241,7 +244,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The ClosureCode
      */
@@ -251,7 +254,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param ClosureCode
      *     The ClosureCode
      */
@@ -261,7 +264,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The Company
      */
@@ -271,7 +274,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param Company
      *     The Company
      */
@@ -281,7 +284,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The Description
      */
@@ -291,7 +294,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param Description
      *     The Description
      */
@@ -301,7 +304,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The Impact
      */
@@ -311,7 +314,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param Impact
      *     The Impact
      */
@@ -321,7 +324,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The IncidentID
      */
@@ -331,7 +334,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param IncidentID
      *     The IncidentID
      */
@@ -340,8 +343,30 @@ public class Object_Incident_ {
         this.IncidentID = IncidentID;
     }
 
+
     /**
-     * 
+     *
+     * @return
+     * The JournalUpdates
+     */
+    @JsonProperty("JournalUpdates")
+    public List<String> getJournalUpdates() {
+        return JournalUpdates;
+    }
+
+    /**
+     *
+     * @param JournalUpdates
+     * The JournalUpdates
+     */
+    @JsonProperty("JournalUpdates")
+    public void setJournalUpdates(List<String> JournalUpdates) {
+        this.JournalUpdates = JournalUpdates;
+    }
+
+
+    /**
+     *
      * @return
      *     The Location
      */
@@ -351,7 +376,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param Location
      *     The Location
      */
@@ -361,7 +386,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The OpenTime
      */
@@ -371,7 +396,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param OpenTime
      *     The OpenTime
      */
@@ -381,7 +406,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The OpenedBy
      */
@@ -391,7 +416,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param OpenedBy
      *     The OpenedBy
      */
@@ -401,7 +426,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The ProblemType
      */
@@ -411,7 +436,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param ProblemType
      *     The ProblemType
      */
@@ -421,7 +446,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The SLAAgreementID
      */
@@ -431,7 +456,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param SLAAgreementID
      *     The SLAAgreementID
      */
@@ -441,7 +466,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The Service
      */
@@ -451,7 +476,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param Service
      *     The Service
      */
@@ -461,7 +486,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The Solution
      */
@@ -471,7 +496,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param Solution
      *     The Solution
      */
@@ -481,7 +506,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The Status
      */
@@ -491,7 +516,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param Status
      *     The Status
      */
@@ -501,7 +526,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The Subarea
      */
@@ -511,7 +536,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param Subarea
      *     The Subarea
      */
@@ -521,7 +546,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The TicketOwner
      */
@@ -531,7 +556,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param TicketOwner
      *     The TicketOwner
      */
@@ -541,7 +566,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The Title
      */
@@ -551,7 +576,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param Title
      *     The Title
      */
@@ -561,7 +586,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The UpdatedBy
      */
@@ -571,7 +596,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param UpdatedBy
      *     The UpdatedBy
      */
@@ -581,7 +606,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The UpdatedTime
      */
@@ -591,7 +616,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param UpdatedTime
      *     The UpdatedTime
      */
@@ -601,7 +626,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @return
      *     The Urgency
      */
@@ -611,7 +636,7 @@ public class Object_Incident_ {
     }
 
     /**
-     * 
+     *
      * @param Urgency
      *     The Urgency
      */

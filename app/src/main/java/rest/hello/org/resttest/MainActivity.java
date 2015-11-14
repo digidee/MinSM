@@ -61,8 +61,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //Listview
     //****************
     private String[] textIM, textTitle, textStatus;
-    private Integer[] image_id;
-    private String crash;
     Object_Incident incident;
     private Activity act;
     ListView lv;
@@ -154,7 +152,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             createList(incident);
 
         } catch (Exception e) {
-            crash = e.getMessage();
             Log.e("MainActivity", e.getMessage(), e);
 
         }
@@ -165,12 +162,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         textIM = new String[incident.getCount()];
         textStatus = new String[incident.getCount()];
         textTitle = new String[incident.getCount()];
-        image_id = new Integer[incident.getCount()];
         for (int i = 0; i < incident.getCount(); i++) {
             textIM[i] = incident.getContent().get(i).getIncident().getIncidentID().toString();
             textTitle[i] = incident.getContent().get(i).getIncident().getTitle().toString();
             textStatus[i] = incident.getContent().get(i).getIncident().getStatus().toString();
-            //image_id[i] = R.mipmap.ic_launcher;
         }
         adapter = new CustomListAdapter(act, textIM, textStatus, textTitle);
         lv = (ListView) findViewById(R.id.listview);
@@ -188,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         intent.putExtra("description", incident.getContent().get(lv.getPositionForView(view)).getIncident().getDescription().toString());
                         intent.putExtra("openby", incident.getContent().get(lv.getPositionForView(view)).getIncident().getOpenedBy().toString());
                         intent.putExtra("service", incident.getContent().get(lv.getPositionForView(view)).getIncident().getService().toString());
+                        intent.putExtra("journal", incident.getContent().get(lv.getPositionForView(view)).getIncident().getJournalUpdates().toString());
                         startActivity(intent);
                     }
                 }

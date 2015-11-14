@@ -27,9 +27,14 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:src="@android:drawable/ic_input_add"
+        android:tint="@color/colorWhite"
+        app:backgroundTint="@color/colorPrimary"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_popup_sync" />
+        android:layout_gravity="bottom|end"
+        app:fabSize="normal" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab2"
@@ -37,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
         android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/colorPrimary"
         android:src="@android:drawable/ic_input_get" />
 
     <android.support.design.widget.FloatingActionButton
@@ -45,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/colorPrimary"
         android:src="@android:drawable/ic_menu_info_details" />
 
 </android.support.design.widget.CoordinatorLayout>

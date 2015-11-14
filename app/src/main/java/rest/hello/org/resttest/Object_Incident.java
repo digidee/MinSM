@@ -16,13 +16,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
 @JsonPropertyOrder({
-    "@count",
-    "@start",
-    "@totalcount",
-    "Messages",
-    "ResourceName",
-    "ReturnCode",
-    "content"
+        "@count",
+        "@start",
+        "@totalcount",
+        "Messages",
+        "ResourceName",
+        "ReturnCode",
+        "content"
 })
 public class Object_Incident {
 
@@ -44,7 +44,7 @@ public class Object_Incident {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
+     *
      * @return
      *     The Count
      */
@@ -54,7 +54,7 @@ public class Object_Incident {
     }
 
     /**
-     * 
+     *
      * @param Count
      *     The @count
      */
@@ -64,7 +64,7 @@ public class Object_Incident {
     }
 
     /**
-     * 
+     *
      * @return
      *     The Start
      */
@@ -74,7 +74,7 @@ public class Object_Incident {
     }
 
     /**
-     * 
+     *
      * @param Start
      *     The @start
      */
@@ -84,7 +84,7 @@ public class Object_Incident {
     }
 
     /**
-     * 
+     *
      * @return
      *     The Totalcount
      */
@@ -94,7 +94,7 @@ public class Object_Incident {
     }
 
     /**
-     * 
+     *
      * @param Totalcount
      *     The @totalcount
      */
@@ -104,7 +104,7 @@ public class Object_Incident {
     }
 
     /**
-     * 
+     *
      * @return
      *     The Messages
      */
@@ -114,7 +114,7 @@ public class Object_Incident {
     }
 
     /**
-     * 
+     *
      * @param Messages
      *     The Messages
      */
@@ -124,7 +124,7 @@ public class Object_Incident {
     }
 
     /**
-     * 
+     *
      * @return
      *     The ResourceName
      */
@@ -134,7 +134,7 @@ public class Object_Incident {
     }
 
     /**
-     * 
+     *
      * @param ResourceName
      *     The ResourceName
      */
@@ -144,7 +144,7 @@ public class Object_Incident {
     }
 
     /**
-     * 
+     *
      * @return
      *     The ReturnCode
      */
@@ -154,7 +154,7 @@ public class Object_Incident {
     }
 
     /**
-     * 
+     *
      * @param ReturnCode
      *     The ReturnCode
      */
@@ -164,7 +164,7 @@ public class Object_Incident {
     }
 
     /**
-     * 
+     *
      * @return
      *     The content
      */
@@ -174,7 +174,7 @@ public class Object_Incident {
     }
 
     /**
-     * 
+     *
      * @param content
      *     The content
      */

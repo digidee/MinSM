@@ -42,7 +42,7 @@
 
 
     //***************************
-    //ShowIncident Strings
+    //Incident Strings
     //***************************
     //Labels
     <string name="incident_label">Incident</string>
@@ -52,6 +52,7 @@
     <string name="description_label">Description</string>
     <string name="service_label">Service</string>
     <string name="openby_label">Opened By</string>
+    <string name="journal_label">Journal Updates</string>
 
     //Values
     <string name="incident_value">[Incident]</string>
@@ -61,6 +62,8 @@
     <string name="description_value">[Description]</string>
     <string name="service_value">[Service]</string>
     <string name="openby_value">{Opened By]</string>
+    <string name="journal_value">[Journal Updates]</string>
+
 
     //Buttons
     <string name="resolve_incident">Resolve Incident</string>
@@ -72,6 +75,18 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_drawer_user">User</string>
     <string name="navigation_drawer_email">Email</string>
+
+    //***************************
+    //Incident Update Strings
+    //***************************
+    //Labels
+    <string name="incident_update_title">Update Incident</string>
+
+    //***************************
+    //Incident Resolve Strings
+    //***************************
+    //Labels
+    <string name="incident_resolve_title">Resolve Incident</string>
 
 
 </resources>
