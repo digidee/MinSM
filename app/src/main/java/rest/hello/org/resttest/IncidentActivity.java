@@ -177,7 +177,7 @@ public class IncidentActivity extends AppCompatActivity {
                 response = restTemplate.exchange(paramURL, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Object_Incident.class);
                 incident = response.getBody();
                 Log.e("response", response.toString());
-                Log.e("body", response.getBody()..toString());
+                Log.e("body", response.getBody().toString());
                 Log.e("Header", response.getHeaders().toString());
 
                 return incident;
