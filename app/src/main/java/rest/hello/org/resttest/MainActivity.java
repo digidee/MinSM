@@ -7,11 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -19,11 +16,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -89,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.setDrawerTitle(Gravity.LEFT,"meh");
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -98,14 +98,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
+
         //Get Preferences Data
         SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         demoMode = SP.getBoolean("demo", false);
-
-        pDialog = new ProgressDialog(this);
-        pDialog.setMessage("Getting Incidents ...");
-        pDialog.setIndeterminate(false);
-        pDialog.setCancelable(false);
+        strUserName = SP.getString("username", "falcon");
 
         act = this;
 
@@ -121,6 +118,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         demoMode = SP.getBoolean("demo", false);
@@ -132,6 +135,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
         demoMode = SP.getBoolean("demo", false);
+
+
         if (demoMode) JSONObjectList();
         else new HttpRequestTask().execute();
     }
@@ -251,46 +256,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    public void notifyMe(String m) {
-        Context context = getApplicationContext();
-        CharSequence text = "Hello toast!";
-        int duration = Toast.LENGTH_LONG;
-
-        Toast toast = Toast.makeText(context, m, duration);
-        toast.show();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent i = new Intent(this, SettingsPreferencesActivity.class);
-            startActivity(i);
-            return true;
-        }
-
-        if (id == R.id.action_refresh) {
-            if (!demoMode) new HttpRequestTask().execute();
-            return true;
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
     //TESTING MENU
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -298,8 +263,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.user_settings) {
-            Intent i = new Intent(this, SettingsUserActivity.class);
+        if (id == R.id.server_settings) {
+            Intent i = new Intent(this, SettingsServerActivity.class);
             startActivity(i);
         } else if (id == R.id.view_settings) {
             Intent i = new Intent(this, SettingsViewActivity.class);
@@ -316,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+                drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 

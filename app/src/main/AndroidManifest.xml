@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsPreferencesActivity"
+            android:name=".SettingsServerActivity"
             android:label="@string/preferences_title"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity

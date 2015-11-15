@@ -73,8 +73,8 @@
     //Drawer
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="navigation_drawer_user">User</string>
-    <string name="navigation_drawer_email">Email</string>
+    <string name="navigation_drawer_user">Demo</string>
+    <string name="navigation_drawer_email">demo@sykehuspartner.no</string>
 
     //***************************
     //Incident Update Strings
@@ -97,8 +97,6 @@
     <string name="login_user_label">Username</string>
     <string name="login_password_label">Password</string>
     <string name="login_demo_label">Demo mode</string>
-    login_demo_label
-
 
 
 </resources>

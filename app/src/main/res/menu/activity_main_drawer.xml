@@ -2,19 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/user_settings" android:icon="@android:drawable/ic_dialog_alert"
-            android:title="User Settings" />
-        <item android:id="@+id/view_settings" android:icon="@android:drawable/ic_menu_more"
+        <item
+            android:id="@+id/view_settings"
+            android:icon="@android:drawable/ic_menu_view"
             android:title="View Settings" />
+        <item
+            android:id="@+id/update_settings"
+            android:icon="@android:drawable/ic_popup_sync"
+            android:title="Update Settings" />
     </group>
 
     <item android:title="System">
         <menu>
-            <item android:id="@+id/update_settings" android:icon="@android:drawable/ic_menu_share"
-                android:title="Update Settings" />
-            <item android:id="@+id/notifications" android:icon="@android:drawable/ic_notification_overlay"
+            <item
+                android:id="@+id/server_settings"
+                android:icon="@android:drawable/ic_menu_preferences"
+                android:title="Server Settings" />
+            <item
+                android:id="@+id/notifications"
+                android:icon="@android:drawable/ic_dialog_info"
                 android:title="Notifications" />,
-            <item android:id="@+id/logout" android:icon="@android:drawable/ic_notification_overlay"
+            <item
+                android:id="@+id/logout"
+                android:icon="@android:drawable/ic_lock_power_off"
                 android:title="Log out" />
         </menu>
     </item>
