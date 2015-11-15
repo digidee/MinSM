@@ -89,4 +89,14 @@
     <string name="incident_resolve_title">Resolve Incident</string>
 
 
+    //***************************
+    //Login Strings
+    //***************************
+    //Labels
+    <string name="incident_login">Login</string>
+    <string name="login_user_label">Username</string>
+    <string name="login_password_label">Password</string>
+
+
+
 </resources>

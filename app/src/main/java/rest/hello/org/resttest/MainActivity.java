@@ -86,8 +86,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -192,11 +190,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     private class HttpRequestTask extends AsyncTask<Void, Void, Object_Incident> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog.show();
-        }
 
         @Override
         protected Object_Incident doInBackground(Void... params) {
@@ -251,18 +244,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         protected void onPostExecute(final Object_Incident incident) {
-
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    pDialog.dismiss();
-                }
-            }, 1000L);
             if (incident != null) {
                 createList(incident);
             }
-
         }
     }
 
@@ -325,6 +309,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent i = new Intent(this, SettingsNotificationActivity.class);
             startActivity(i);
 
+        }
+        else if (id == R.id.logout) {
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
