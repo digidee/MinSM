@@ -96,6 +96,8 @@
     <string name="incident_login">Login</string>
     <string name="login_user_label">Username</string>
     <string name="login_password_label">Password</string>
+    <string name="login_demo_label">Demo mode</string>
+    login_demo_label
 
 
 

@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -36,7 +37,6 @@ import java.util.Collections;
 public class LoginActivity extends AppCompatActivity {
 
 
-
     //Initializating for  Preferences Data
     private SharedPreferences SP;
     String usr, pass;
@@ -46,7 +46,8 @@ public class LoginActivity extends AppCompatActivity {
     String url;
     boolean crash;
 
-    EditText user_input,password_input;
+    EditText user_input, password_input;
+    CheckBox demo_input;
 
     Object_Incident incident;
 
@@ -71,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         SP = PreferenceManager.getDefaultSharedPreferences(this);
         strServer = SP.getString("server", "http://192.168.0.26");
         strPort = SP.getString("port", "13080");
-        demo = SP.getBoolean("demo", false);
+
 
         Button loginButton = (Button) findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -80,29 +81,26 @@ public class LoginActivity extends AppCompatActivity {
 
                 user_input = (EditText) findViewById(R.id.login_user);
                 password_input = (EditText) findViewById(R.id.login_password);
+                demo_input = (CheckBox) findViewById(R.id.login_demo);
                 usr = user_input.getText().toString();
                 pass = password_input.getText().toString();
+                demo = demo_input.isChecked();
 
-                Log.e("LoginActivity", "Username: " + usr   + " - Password: " + pass);
+                Log.e("LoginActivity", "Username: " + usr + " - Password: " + pass);
 
                 if (!demo) new HttpRequestTask().execute();
-                else{
-
-                    Snackbar snack = Snackbar.make(view," Incident resolved", Snackbar.LENGTH_LONG);
-                    View snackView = snack.getView();
-                    TextView tv = (TextView) snackView.findViewById(android.support.design.R.id.snackbar_text);
-                    tv.setTextAlignment(snackView.TEXT_ALIGNMENT_CENTER);
-                    snack.show();
-
+                else {
+                    SharedPreferences.Editor editor = SP.edit();
+                    editor.putBoolean("demo", true);
+                    editor.commit();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
                 }
-
-
             }
 
         });
 
     }
-
 
 
     private class HttpRequestTask extends AsyncTask<Void, Void, Integer> {
@@ -155,24 +153,27 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(Integer res) {
             super.onPostExecute(res);
             pDialog.dismiss();
-            String snackMessage="Could not connect to server";
+            String snackMessage = "Could not connect to server";
 
-            if(crash){}
-            else if (res==200) {
-                SharedPreferences.Editor editor = SP.edit();
-                editor.putString("username", usr);
-                editor.putString("password", pass);
-                editor.commit();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+            try {
+                if (res == 200) {
+                    SharedPreferences.Editor editor = SP.edit();
+                    editor.putString("username", usr);
+                    editor.putString("password", pass);
+                    editor.putBoolean("demo", false);
+                    editor.commit();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    snackMessage = "HTTP Error code: " + res;
+                    Log.e("MainActivity", "HTTP Status code: " + res);
+                }
+            } catch (Exception e) {
+
             }
-            else
-            {
-                snackMessage = "HTTP Error code: "+res;
-                Log.e("MainActivity", "HTTP Status code: "+res);
-            }
-            Log.e("MainActivity", "HTTP Status code: "+res);
-            Snackbar snack = Snackbar.make(getWindow().findViewById(R.id.view_login),snackMessage, Snackbar.LENGTH_LONG);
+
+            Log.e("MainActivity", "HTTP Status code: " + res);
+            Snackbar snack = Snackbar.make(getWindow().findViewById(R.id.view_login), snackMessage, Snackbar.LENGTH_LONG);
             View snackView = snack.getView();
             TextView tv = (TextView) snackView.findViewById(android.support.design.R.id.snackbar_text);
             tv.setTextAlignment(snackView.TEXT_ALIGNMENT_CENTER);
