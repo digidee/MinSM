@@ -10,22 +10,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class CustomListAdapter extends ArrayAdapter<String> {
-    String[] textIM, textTitle, textStatus;
+    String[] textIM, textTitle, textStatus, textCrit, textDate;
     //Integer[] image_id;
     Context context;
 
-    public CustomListAdapter(Activity context, String[] textIM, String[] textStatus, String[] textTitle) {
+    public CustomListAdapter(Activity context, String[] textIM, String[] textStatus, String[] textTitle, String[] textCrit, String[] textDate) {
         super(context, R.layout.list_row, textIM);
-        // TODO Auto-generated constructor stub
         this.textIM = textIM;
         this.textTitle = textTitle;
         this.textStatus = textStatus;
+        this.textCrit = textCrit;
+        this.textDate = textDate;
         this.context = context;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View single_row = inflater.inflate(R.layout.list_row, null,
@@ -33,11 +33,15 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         TextView textViewIM = (TextView) single_row.findViewById(R.id.textViewIM);
         TextView textViewTitle = (TextView) single_row.findViewById(R.id.textViewTitle);
         TextView textViewStatus = (TextView) single_row.findViewById(R.id.textViewStatus);
-//        ImageView imageView = (ImageView) single_row.findViewById(R.id.imageView);
+        TextView textViewCrit = (TextView) single_row.findViewById(R.id.textViewCrit);
+        TextView textViewDate = (TextView) single_row.findViewById(R.id.textViewDate);
+
         textViewIM.setText(textIM[position]);
         textViewTitle.setText(textTitle[position]);
         textViewStatus.setText(textStatus[position]);
-//      imageView.setImageResource(image_id[position]);
+        textViewCrit.setText(textCrit[position]);
+        textViewDate.setText(textDate[position]);
+
         return single_row;
     }
 

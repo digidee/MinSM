@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //*****************
     //Listview
     //****************
-    private String[] textIM, textTitle, textStatus;
+    private String[] textIM, textTitle, textStatus, textCrit, textDate;
     Object_Incident incident;
     private Activity act;
     ListView lv;
@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.setDrawerTitle(Gravity.LEFT,"meh");
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -165,12 +164,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         textIM = new String[incident.getCount()];
         textStatus = new String[incident.getCount()];
         textTitle = new String[incident.getCount()];
+        textCrit = new String[incident.getCount()];
+        textDate = new String[incident.getCount()];
         for (int i = 0; i < incident.getCount(); i++) {
             textIM[i] = incident.getContent().get(i).getIncident().getIncidentID().toString();
             textTitle[i] = incident.getContent().get(i).getIncident().getTitle().toString();
             textStatus[i] = incident.getContent().get(i).getIncident().getStatus().toString();
+            textCrit[i] = incident.getContent().get(i).getIncident().getImpact().toString()+" - "+incident.getContent().get(i).getIncident().getUrgency().toString();
+            textDate[i] = incident.getContent().get(i).getIncident().getOpenTime().toString();
         }
-        adapter = new CustomListAdapter(act, textIM, textStatus, textTitle);
+        adapter = new CustomListAdapter(act, textIM, textStatus, textTitle,textCrit,textDate);
         lv = (ListView) findViewById(R.id.listview);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(
@@ -268,10 +271,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(i);
         } else if (id == R.id.view_settings) {
             Intent i = new Intent(this, SettingsViewActivity.class);
-            startActivity(i);
-
-        } else if (id == R.id.notifications) {
-            Intent i = new Intent(this, SettingsNotificationActivity.class);
             startActivity(i);
 
         }

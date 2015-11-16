@@ -157,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
             pDialog.dismiss();
             String snackMessage = "Could not connect to server";
 
-            try {
+            if(res!=null) {
                 if (res == 200) {
                     SharedPreferences.Editor editor = SP.edit();
                     editor.putString("username", usr);
@@ -170,8 +170,6 @@ public class LoginActivity extends AppCompatActivity {
                     snackMessage = "HTTP Error code: " + res;
                     Log.e("MainActivity", "HTTP Status code: " + res);
                 }
-            } catch (Exception e) {
-
             }
 
             Log.e("MainActivity", "HTTP Status code: " + res);

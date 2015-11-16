@@ -99,4 +99,28 @@
     <string name="login_demo_label">Demo mode</string>
 
 
+    //***************************
+    //Solution Codes Array
+    //***************************
+    <string name="solution_prompt">Select solution code</string>
+    <string-array name="solution_codes">
+        <item>Solved by Workaround</item>
+        <item>Automatically Closed</item>
+        <item>Out of Scope</item>
+        <item>Solved by User Instructions</item>
+    </string-array>
+
+
+    //***************************
+    //Solution Codes Array
+    //***************************
+    <string name="update_prompt">Select solution code</string>
+    <string-array name="update_codes">
+        <item>Communication with customer</item>
+        <item>Operator Update</item>
+        <item>Communication with vendor</item>
+        <item>Update from customer</item>
+    </string-array>
+
+
 </resources>

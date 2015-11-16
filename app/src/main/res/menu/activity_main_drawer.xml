@@ -7,21 +7,13 @@
             android:icon="@android:drawable/ic_menu_view"
             android:title="View Settings" />
         <item
-            android:id="@+id/update_settings"
-            android:icon="@android:drawable/ic_popup_sync"
-            android:title="Update Settings" />
+            android:id="@+id/server_settings"
+            android:icon="@android:drawable/ic_menu_preferences"
+            android:title="Server Settings" />
     </group>
 
-    <item android:title="System">
+    <item android:title="User">
         <menu>
-            <item
-                android:id="@+id/server_settings"
-                android:icon="@android:drawable/ic_menu_preferences"
-                android:title="Server Settings" />
-            <item
-                android:id="@+id/notifications"
-                android:icon="@android:drawable/ic_dialog_info"
-                android:title="Notifications" />,
             <item
                 android:id="@+id/logout"
                 android:icon="@android:drawable/ic_lock_power_off"

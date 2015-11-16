@@ -29,15 +29,7 @@
             android:label="@string/preferences_title"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".SettingsUserActivity"
-            android:label="@string/preferences_title"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
             android:name=".SettingsViewActivity"
-            android:label="@string/preferences_title"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".SettingsNotificationActivity"
             android:label="@string/preferences_title"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
