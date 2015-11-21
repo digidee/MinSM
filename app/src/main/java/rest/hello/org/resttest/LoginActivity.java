@@ -72,8 +72,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //Getting preference data
         SP = PreferenceManager.getDefaultSharedPreferences(this);
-        strServer = SP.getString("server", "http://192.168.0.26");
-        strPort = SP.getString("port", "13080");
+
 
 
         Button loginButton = (Button) findViewById(R.id.login_button);
@@ -110,6 +109,8 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected Integer doInBackground(Void... params) {
             try {
+                strServer = SP.getString("server", "http://192.168.0.26");
+                strPort = SP.getString("port", "13080");
 
                 // The connection URL - Building a parameterized URL
                 String url = strServer + ":" + strPort + "/SM/9/rest/incidents";

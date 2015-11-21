@@ -39,15 +39,6 @@
             android:parentActivityName=".MainActivity">
         </activity>
 
-        <activity
-            android:name=".IncidentUpdate"
-            android:label="@string/incident_update_title"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".IncidentResolve"
-            android:label="@string/incident_resolve_title"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
     </application>
 
 </manifest>

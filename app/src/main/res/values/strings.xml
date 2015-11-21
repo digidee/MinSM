@@ -52,7 +52,8 @@
     <string name="description_label">Description</string>
     <string name="service_label">Service</string>
     <string name="openby_label">Opened By</string>
-    <string name="journal_label">Journal Updates</string>
+    <string name="journal_label">Journal Updates</string>aci_value
+    <string name="aci_label">Affected CI</string>aci_value
 
     //Values
     <string name="incident_value">[Incident]</string>
@@ -63,6 +64,7 @@
     <string name="service_value">[Service]</string>
     <string name="openby_value">{Opened By]</string>
     <string name="journal_value">[Journal Updates]</string>
+    <string name="aci_value">[Affected CI]</string>aci_value
 
 
     //Buttons
@@ -122,5 +124,12 @@
         <item>Update from customer</item>
     </string-array>
 
+
+    //***************************
+    //Tab Headers
+    //***************************
+    <string name="tab_info_header">Info</string>
+    <string name="tab_update_header">Update</string>
+    <string name="tab_resolve_header">Resolve</string>
 
 </resources>
