@@ -4,19 +4,24 @@ package rest.hello.org.resttest;
  * Created by digi on 16.11.2015.
  */
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -54,12 +59,19 @@ public class TabFragmentUpdate extends Fragment {
     EditText updateText;
     Object_Incident incident;
     Object_ActivityTypes activityTypes;
+    Object_Activities acties;
+
+    ListView lv;
+    ListAdapterActivity adapter;
+
+    private String[] textType, textOperator, textDescription, textDate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.tab_fragment_updates, container, false);
-
+       // inflater.inflate(R.layout.tab_fragment_updates, container, false);
+        View view = inflater.inflate(R.layout.tab_fragment_updates, container, false);
+        return view;
     }
 
     @Override
@@ -121,7 +133,55 @@ public class TabFragmentUpdate extends Fragment {
         });
 
         if (!demo) new HttpRequestTask2().execute();
+        if (!demo) new HttpRequestTask3().execute();
 
+    }
+
+    private class HttpRequestTask3 extends AsyncTask<Void, Void, Object_Activities> {
+
+
+        @Override
+        protected Object_Activities doInBackground(Void... params) {
+            try {
+
+                url = strServer + ":" + strPort + "/SM/9/rest/Activity?number="+im+"&view=expand";
+                Log.e("MainActivity", "url: " + url);
+
+
+                RestTemplate restTemplate = new RestTemplate();
+                ResponseEntity<Object_Activities> response;
+
+                // Populate the HTTP Basic Authentitcation header with the username and password
+                HttpAuthentication authHeader = new HttpBasicAuthentication(strUserName, strPassword);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                requestHeaders.setAuthorization(authHeader);
+                requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+                response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Object_Activities.class);
+
+                Log.e("TabFragmentUpdate", response.getBody().getCount().toString());
+                Log.e("TabFragmentUpdate", response.getBody().getTotalcount().toString());
+                Log.e("TabFragmentUpdate-type",response.getBody().getContent().get(1).getActivity().getType().toString());
+                Log.e("TabFragmentUpdate", response.toString());
+                acties = response.getBody();
+                return acties;
+
+            } catch (Exception e) {
+
+                Log.e("MainActivity", e.getMessage(), e);
+
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object_Activities activities) {
+            super.onPostExecute(activities);
+
+            createList(activities);
+
+        }
     }
 
     private class HttpRequestTask2 extends AsyncTask<Void, Void, Object_ActivityTypes> {
@@ -146,7 +206,7 @@ public class TabFragmentUpdate extends Fragment {
 
                 response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Object_ActivityTypes.class);
 
-                Log.e("MainActivity", response.toString());
+                Log.e("TabFragmentUpdateHTTP2", response.toString());
                 activityTypes = response.getBody();
                 return activityTypes;
 
@@ -174,6 +234,35 @@ public class TabFragmentUpdate extends Fragment {
 
         }
     }
+
+    public void createList(final Object_Activities activities) {
+        textType = new String[activities.getCount()];
+        textOperator = new String[activities.getCount()];
+        textDescription = new String[activities.getCount()];
+        textDate = new String[activities.getCount()];
+
+        for (int i = 0; i < activities.getCount(); i++) {
+            textType[i] = activities.getContent().get(i).getActivity().getType().toString();
+            textOperator[i] = activities.getContent().get(i).getActivity().getOperator().toString();
+            textDescription[i] = activities.getContent().get(i).getActivity().getDescription().toString();
+            textDate[i] = activities.getContent().get(i).getActivity().getDateStamp().toString();
+            Log.e("TabFragmentUpdateloop", "iteration"+i);
+            Log.e("Type", textType[i]);
+            Log.e("Operator", textOperator[i]);
+            Log.e("Description", textDescription[i]);
+            Log.e("Date", textDate[i]);
+            textType[i] = "test";
+            textOperator[i] =  "test";
+            textDescription[i] =  "test";
+            textDate[i] = "test";
+        }
+
+
+        adapter = new ListAdapterActivity(getContext(), textDate, textOperator, textDescription, textDate);
+        lv = (ListView) getView().findViewById(R.id.listview_activities);
+        lv.setAdapter(adapter);
+    }
+
 
     private class HttpRequestTask extends AsyncTask<Void, Void, Object_Incident> {
 

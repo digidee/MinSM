@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Object_Incident incident;
     private Activity act;
     ListView lv;
-    IncidentListAdapter adapter;
+    ListAdapterIncident adapter;
 
     //*****************
     //Preference Data Declaration
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             textCrit[i] = incident.getContent().get(i).getIncident().getImpact().toString()+" - "+urgText;
             textDate[i] = incident.getContent().get(i).getIncident().getOpenTime().toString();
         }
-        adapter = new IncidentListAdapter(act, textIM, textStatus, textTitle,textCrit,textDate);
+        adapter = new ListAdapterIncident(act, textIM, textStatus, textTitle,textCrit,textDate);
         lv = (ListView) findViewById(R.id.listview);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(
