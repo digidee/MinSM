@@ -2,13 +2,13 @@
         <EditTextPreference
             android:defaultValue="http://192.168.0.26"
             android:key="server"
-            android:summary="Please provide your Service Manager server"
-            android:title="Server"></EditTextPreference>
+            android:summary="@string/view_server_summary"
+            android:title="@string/view_server_title"></EditTextPreference>
         <EditTextPreference
             android:defaultValue="13080"
             android:key="port"
-            android:summary="Please provide your Service Manager port"
-            android:title="Port"></EditTextPreference>
+            android:summary="@string/view_port_summary"
+            android:title="@string/view_port_title"></EditTextPreference>
     </PreferenceScreen>
 
 

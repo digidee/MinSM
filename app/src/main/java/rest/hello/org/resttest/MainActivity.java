@@ -2,7 +2,6 @@ package rest.hello.org.resttest;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -16,14 +15,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -63,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Object_Incident incident;
     private Activity act;
     ListView lv;
-    CustomListAdapter adapter;
+    IncidentListAdapter adapter;
 
     //*****************
     //Preference Data Declaration
@@ -79,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     SwipeRefreshLayout mSwipeRefreshLayout;
 
+    TextView menuUser, menuEmail;
+    View DrawerRootView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -97,11 +98,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
         //Get Preferences Data
         SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         demoMode = SP.getBoolean("demo", false);
         strUserName = SP.getString("username", "falcon");
+
+        //Get access to drawerHeader to set user and email
+        View drawerHeader = navigationView.inflateHeaderView(R.layout.nav_header_main);
+
+        TextView menuUser = (TextView) drawerHeader.findViewById(R.id.menu_user_name);
+        TextView menuEmail = (TextView) drawerHeader.findViewById(R.id.menu_user_email);
+        menuUser.setText(strUserName);
+        menuEmail.setText(strUserName+"sykehuspartner.no");
+
 
         act = this;
 
@@ -116,9 +125,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+
 
     }
 
@@ -166,14 +178,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         textTitle = new String[incident.getCount()];
         textCrit = new String[incident.getCount()];
         textDate = new String[incident.getCount()];
+        String urgText = "Low";
         for (int i = 0; i < incident.getCount(); i++) {
             textIM[i] = incident.getContent().get(i).getIncident().getIncidentID().toString();
             textTitle[i] = incident.getContent().get(i).getIncident().getTitle().toString();
             textStatus[i] = incident.getContent().get(i).getIncident().getStatus().toString();
-            textCrit[i] = incident.getContent().get(i).getIncident().getImpact().toString()+" - "+incident.getContent().get(i).getIncident().getUrgency().toString();
+            if (incident.getContent().get(i).getIncident().getUrgency().equals("1")) urgText = "Critical";
+            else if (incident.getContent().get(i).getIncident().getUrgency().equals("2")) urgText = "High";
+            else if (incident.getContent().get(i).getIncident().getUrgency().equals("3")) urgText = "Average";
+            textCrit[i] = incident.getContent().get(i).getIncident().getImpact().toString()+" - "+urgText;
             textDate[i] = incident.getContent().get(i).getIncident().getOpenTime().toString();
         }
-        adapter = new CustomListAdapter(act, textIM, textStatus, textTitle,textCrit,textDate);
+        adapter = new IncidentListAdapter(act, textIM, textStatus, textTitle,textCrit,textDate);
         lv = (ListView) findViewById(R.id.listview);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(

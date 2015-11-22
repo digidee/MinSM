@@ -40,6 +40,22 @@
     <string name="user_value">[User]</string>
     <string name="pass_value">[Pass]</string>
 
+    //View Settings
+    <string name="view_count_title">Incident Count</string>
+    <string name="view_count_summary">Select the number of incidents showing in your home screen</string>
+    <string name="view_assign_title">Assignment group</string>
+    <string name="view_assign_summary">This option if selected will show incidents from your assignment group.</string>
+    <string name="view_sort_title">Sort by</string>
+    <string name="view_sort_summary">Select the sort type of incidents showing in your home screen</string>
+    <string name="view_desc_asc_title">Ascending</string>
+    <string name="view_desc_asc_summary">This option if selected will show incidents sorted by your preference in ascending order.</string>
+
+    //Server Settings
+    <string name="view_server_title">Server</string>
+    <string name="view_server_summary">Please enter the IP to the HP Service Manager server</string>
+    <string name="view_port_title">Port</string>
+    <string name="view_port_summary">Please enter the port to the HP Service Manager server</string>
+
 
     //***************************
     //Incident Strings

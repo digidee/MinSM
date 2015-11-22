@@ -6,11 +6,23 @@
         android:entries="@array/listArray"
         android:entryValues="@array/listValues"
         android:key="incidentCount"
-        android:summary="Select the count of incidents you would like"
-        android:title="Incident Count" />
+        android:summary="@string/view_count_summary"
+        android:title="@string/view_count_title" />
     <CheckBoxPreference
         android:defaultValue="false"
-        android:key="demo"
-        android:summary="This option if selected will use a predefined JSON Object for demo purposes."
-        android:title="Demo Mode" />
+        android:key="assignment_group"
+        android:summary="@string/view_assign_summary"
+        android:title="@string/view_assign_title" />
+    <ListPreference
+        android:defaultValue="Incident number"
+        android:entries="@array/sortByArray"
+        android:entryValues="@array/sortByValues"
+        android:key="sort_order"
+        android:summary="@string/view_sort_summary"
+        android:title="@string/view_sort_title" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="dec_asc"
+        android:summary="@string/view_desc_asc_summary"
+        android:title="@string/view_desc_asc_title" />
 </PreferenceScreen>
