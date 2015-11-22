@@ -42,7 +42,7 @@ public class Object_Activities {
     @JsonProperty("ReturnCode")
     private Integer ReturnCode;
     @JsonProperty("content")
-    private List<Content> content = new ArrayList<Content>();
+    private List<Object_ActivityContent> content = new ArrayList<Object_ActivityContent>();
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -146,7 +146,7 @@ public class Object_Activities {
      * @return The content
      */
     @JsonProperty("content")
-    public List<Content> getContent() {
+    public List<Object_ActivityContent> getContent() {
         return content;
     }
 
@@ -154,7 +154,7 @@ public class Object_Activities {
      * @param content The content
      */
     @JsonProperty("content")
-    public void setContent(List<Content> content) {
+    public void setContent(List<Object_ActivityContent> content) {
         this.content = content;
     }
 

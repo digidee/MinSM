@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class Object_ActivityContent {
 
     @JsonProperty("Activity")
-    private rest.hello.org.resttest.Activity Activity;
+    private rest.hello.org.resttest.Object_Activity Activity;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -33,7 +33,7 @@ public class Object_ActivityContent {
      * @return The Activity
      */
     @JsonProperty("Activity")
-    public rest.hello.org.resttest.Activity getActivity() {
+    public rest.hello.org.resttest.Object_Activity getActivity() {
         return Activity;
     }
 
@@ -41,7 +41,7 @@ public class Object_ActivityContent {
      * @param Activity The Activity
      */
     @JsonProperty("Activity")
-    public void setActivity(rest.hello.org.resttest.Activity Activity) {
+    public void setActivity(rest.hello.org.resttest.Object_Activity Activity) {
         this.Activity = Activity;
     }
 
