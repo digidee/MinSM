@@ -48,16 +48,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //*************************
 
 
-    //Progress bar
-    ProgressDialog pDialog;
-
-
     //*****************
     //Listview
     //****************
     private String[] textIM, textTitle, textStatus, textCrit, textDate;
     Object_Incident incident;
-    private Activity act;
     ListView lv;
     ListAdapterIncident adapter;
 
@@ -68,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String strUserName, strPassword,strServer, strPort,strIncidentCount,strSortOrder;
     boolean demoMode,assignmentGroup, decAsc;
 
-
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
 
     @Override
@@ -106,11 +101,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 //        if(assignmentGroup) new HttpRequestTask2().execute();
 
-        final SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mSwipeRefreshLayout.setRefreshing(false);
                 if (!demoMode) new HttpRequestTask().execute();
             }
         });
@@ -226,11 +220,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (assignmentGroup) strAssign = "assignment";
                 if(decAsc) strDec = "ascending";
 
-
-
-
-
-
                 // The connection URL - Building a parameterized URL
                 String url = strServer + ":" + strPort + "/SM/9/rest/incidents";
                 UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
@@ -273,6 +262,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         protected void onPostExecute(final Object_Incident incident) {
+            mSwipeRefreshLayout.setRefreshing(false);
             if (incident != null) {
                 createList(incident);
             }
