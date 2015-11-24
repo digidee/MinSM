@@ -25,6 +25,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ListActivityActivity"
+            android:label="@string/tab_update_header"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".SettingsServerActivity"
             android:label="@string/preferences_title"
             android:theme="@style/AppTheme.NoActionBar"></activity>

@@ -17,18 +17,16 @@
 
     <string-array name="sortByArray">
         <item>Incident number</item>
-        <item>Criticality</item>
+        <item>Priority</item>
         <item>Open time</item>
-        <item>Impact</item>
         <item>Status</item>
     </string-array>
 
     <string-array name="sortByValues">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
+        <item>number</item>
+        <item>priority.code</item>
+        <item>open.time</item>
+        <item>problem.status</item>
     </string-array>
 
 

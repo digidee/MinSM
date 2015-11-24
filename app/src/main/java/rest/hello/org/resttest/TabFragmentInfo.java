@@ -4,6 +4,7 @@ package rest.hello.org.resttest;
  * Created by digi on 16.11.2015.
  */
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -111,6 +113,23 @@ public class TabFragmentInfo extends Fragment {
             journalView.setText(journal);
             aciView.setText(aci);
         }
+
+        Button activityButton = (Button) getView().findViewById(R.id.activity_button);
+        activityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!demo) {
+                    Intent intent = new Intent(getContext(), ListActivityActivity.class);
+                    intent.putExtra("im", im);
+                    startActivity(intent);
+                }
+
+
+            }
+
+        });
+
     }
 
 

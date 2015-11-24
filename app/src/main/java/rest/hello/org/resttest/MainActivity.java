@@ -65,18 +65,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //Preference Data Declaration
     //****************
     SharedPreferences SP;
-    String strUserName;
-    String strPassword;
-    String strServer;
-    String strPort;
-    String strIncidentCount;
-    boolean bAppUpdates;
-    boolean demoMode;
+    String strUserName, strPassword,strServer, strPort,strIncidentCount,strSortOrder;
+    boolean demoMode,assignmentGroup, decAsc;
 
-    SwipeRefreshLayout mSwipeRefreshLayout;
 
-    TextView menuUser, menuEmail;
-    View DrawerRootView;
 
 
     @Override
@@ -101,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Get Preferences Data
         SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         demoMode = SP.getBoolean("demo", false);
+        assignmentGroup  = SP.getBoolean("assignment_group", false);
         strUserName = SP.getString("username", "falcon");
 
         //Get access to drawerHeader to set user and email
@@ -109,10 +102,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TextView menuUser = (TextView) drawerHeader.findViewById(R.id.menu_user_name);
         TextView menuEmail = (TextView) drawerHeader.findViewById(R.id.menu_user_email);
         menuUser.setText(strUserName);
-        menuEmail.setText(strUserName+"sykehuspartner.no");
+        menuEmail.setText(strUserName+"@sykehuspartner.no");
 
-
-        act = this;
+//        if(assignmentGroup) new HttpRequestTask2().execute();
 
         final SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -189,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             textCrit[i] = incident.getContent().get(i).getIncident().getImpact().toString()+" - "+urgText;
             textDate[i] = incident.getContent().get(i).getIncident().getOpenTime().toString();
         }
-        adapter = new ListAdapterIncident(act, textIM, textStatus, textTitle,textCrit,textDate);
+        adapter = new ListAdapterIncident(this, textIM, textStatus, textTitle,textCrit,textDate);
         lv = (ListView) findViewById(R.id.listview);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(
@@ -224,7 +216,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 strServer = SP.getString("server", "http://192.168.0.26");
                 strPort = SP.getString("port", "13080");
                 strIncidentCount = SP.getString("incidentCount", "10");
-                bAppUpdates = SP.getBoolean("notifyNew", false);
+
+                strSortOrder = SP.getString("sort_order", "falcon");
+                assignmentGroup  = SP.getBoolean("assignment_group", false);
+                decAsc = SP.getBoolean("dec_asc", false);
+
+                String strDec = "descending";
+                String strAssign = "assignee.name";
+                if (assignmentGroup) strAssign = "assignment";
+                if(decAsc) strDec = "ascending";
+
+
+
+
+
 
                 // The connection URL - Building a parameterized URL
                 String url = strServer + ":" + strPort + "/SM/9/rest/incidents";
@@ -232,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .queryParam("view", "expand")
                         .queryParam("count", strIncidentCount)
                         .queryParam("assignee.name", strUserName)
-                        .queryParam("sort", "number:descending")
+                        .queryParam("sort", strSortOrder+":"+strDec)
                         .queryParam("problem.status~", "Closed");
                 String paramURL = builder.build().encode().toUri().toString();
 
