@@ -56,6 +56,11 @@
     <string name="view_port_title">Port</string>
     <string name="view_port_summary">Please enter the port to the HP Service Manager server</string>
 
+    //Offline Settings
+    <string name="view_offline_title">Offline Data</string>
+    <string name="view_offline_summary">This option if selected will automatically store incident data for offline use.</string>
+    <string name="view_offline_now_title">Refresh Offline Data</string>
+    <string name="view_offline_now_summary">Refresh incident data to offline storage now. You need to be logged on to use this feature</string>
 
     //***************************
     //Incident Strings
@@ -114,7 +119,7 @@
     <string name="incident_login">Login</string>
     <string name="login_user_label">Username</string>
     <string name="login_password_label">Password</string>
-    <string name="login_demo_label">Demo mode</string>
+    <string name="login_demo_label">Offline mode</string>
 
 
     //***************************

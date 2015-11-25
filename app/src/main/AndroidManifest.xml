@@ -37,6 +37,10 @@
             android:label="@string/preferences_title"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
+            android:name=".SettingsOfflineActivity"
+            android:label="@string/preferences_title"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".IncidentActivity"
             android:label="@string/incident_label"
             android:theme="@style/AppTheme.NoActionBar"

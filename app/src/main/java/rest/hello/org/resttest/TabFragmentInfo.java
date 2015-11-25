@@ -40,10 +40,7 @@ public class TabFragmentInfo extends Fragment {
 
     //Initializating for  Preferences Data
     private SharedPreferences SP;
-    String strUserName;
-    String strPassword;
-    String strServer;
-    String strPort;
+    String strUserName, strPassword,strServer, strPort,strIncidentCount,strSortOrder, strOffline;
     boolean demo;
     String url;
     String im, journal;
@@ -90,6 +87,8 @@ public class TabFragmentInfo extends Fragment {
         //Getting preference data
         SP = PreferenceManager.getDefaultSharedPreferences(getContext());
         demo = SP.getBoolean("demo", false);
+        JSONObject = new Object_TestJSON();
+        strOffline = SP.getString("offline", JSONObject.getJSONObject());
 
 
         titleView = (TextView) getView().findViewById(R.id.title_value);
@@ -141,8 +140,7 @@ public class TabFragmentInfo extends Fragment {
             //using JSONObject as test
             //JSON from String to Object
             mapper = new ObjectMapper();
-            JSONObject = new Object_TestJSON();
-            incident = mapper.readValue(JSONObject.getJSONObject(), Object_Incident.class);
+            incident = mapper.readValue(strOffline, Object_Incident.class);
 
             createList(incident);
 

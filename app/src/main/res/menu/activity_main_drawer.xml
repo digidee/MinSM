@@ -10,6 +10,10 @@
             android:id="@+id/server_settings"
             android:icon="@android:drawable/ic_menu_preferences"
             android:title="Server Settings" />
+        <item
+            android:id="@+id/offline_settings"
+            android:icon="@android:drawable/ic_menu_preferences"
+            android:title="Offline Settings" />
     </group>
 
     <item android:title="User">

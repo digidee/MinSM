@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //Preference Data Declaration
     //****************
     SharedPreferences SP;
-    String strUserName, strPassword,strServer, strPort,strIncidentCount,strSortOrder;
-    boolean demoMode,assignmentGroup, decAsc;
+    String strUserName, strPassword,strServer, strPort,strIncidentCount,strSortOrder, strOffline;
+    boolean demo,assignmentGroup, decAsc;
 
     SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Get Preferences Data
         SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        demoMode = SP.getBoolean("demo", false);
+        demo = SP.getBoolean("demo", false);
         assignmentGroup  = SP.getBoolean("assignment_group", false);
         strUserName = SP.getString("username", "falcon");
 
@@ -99,13 +99,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         menuUser.setText(strUserName);
         menuEmail.setText(strUserName+"@sykehuspartner.no");
 
+        //Storing offline data in Preference Manager
+/*        SharedPreferences.Editor editor = SP.edit();
+        editor.putString("offline", JSONObject.getJSONObject());
+        editor.commit();*/
+        JSONObject = new Object_TestJSON();
+        strOffline = SP.getString("offline", JSONObject.getJSONObject());
 //        if(assignmentGroup) new HttpRequestTask2().execute();
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (!demoMode) new HttpRequestTask().execute();
+                if (!demo) new HttpRequestTask().execute();
+                else mSwipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -123,18 +130,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
-        demoMode = SP.getBoolean("demo", false);
-        if (demoMode) JSONObjectList();
+        demo = SP.getBoolean("demo", false);
+        if (demo) JSONObjectList();
         else new HttpRequestTask().execute();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        demoMode = SP.getBoolean("demo", false);
+        demo = SP.getBoolean("demo", false);
 
 
-        if (demoMode) JSONObjectList();
+        if (demo) JSONObjectList();
         else new HttpRequestTask().execute();
     }
 
@@ -146,8 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //using JSONObject as test
             //JSON from String to Object
             mapper = new ObjectMapper();
-            JSONObject = new Object_TestJSON();
-            incident = mapper.readValue(JSONObject.getJSONObject(), Object_Incident.class);
+            incident = mapper.readValue(strOffline, Object_Incident.class);
 
             createList(incident);
 
@@ -283,7 +289,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.view_settings) {
             Intent i = new Intent(this, SettingsViewActivity.class);
             startActivity(i);
-
+        }
+        else if (id == R.id.offline_settings) {
+            Intent i = new Intent(this, SettingsOfflineActivity.class);
+            startActivity(i);
         }
         else if (id == R.id.logout) {
             Intent i = new Intent(this, LoginActivity.class);
